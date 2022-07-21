@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/WorldGuard-Territory-Display.iml" filepath="$PROJECT_DIR$/WorldGuard-Territory-Display.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GriefPrevention-Territory-Display.iml" filepath="$PROJECT_DIR$/GriefPrevention-Territory-Display.iml" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,6 @@
+name: GriefPrevention-Territory-Display
+version: '${project.version}'
+main: com.liamsnow.griefpreventionterritorydisplay.Main
+api-version: 1.19
+authors: [ LiamSnow ]
+website: https://liamsnow.com

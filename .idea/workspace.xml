@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0924de86-ea8e-4450-ac16-d3f7da25e033" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/WorldGuard-Territory-Display.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GriefPrevention-Territory-Display.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/spigot-1.19.jar" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,19 +47,19 @@
 }]]></component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
-      <module name="WorldGuard-Territory-Display" />
+      <module name="GriefPrevention-Territory-Display" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="WorldGuard-Territory-Display" />
+      <module name="GriefPrevention-Territory-Display" />
       <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WorldGuard-Territory-Display build" type="MavenRunConfiguration" factoryName="Maven">
+    <configuration name="GriefPrevention-Territory-Display build" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings">
           <MavenGeneralSettings>
@@ -112,7 +112,7 @@
               <map />
             </option>
             <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="C:\Users\liams\Documents\GitHub\WorldGuard-Territory-Display" />
+            <option name="workingDirPath" value="C:\Users\liams\Documents\GitHub\GriefPrevention-Territory-Display" />
           </MavenRunnerParameters>
         </option>
       </MavenSettings>

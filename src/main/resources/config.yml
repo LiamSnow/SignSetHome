@@ -1,10 +1,12 @@
-# DO NOT EDIT
-config-version: 1
+# This File Contains the Configurations for SignSetHome
 
 # Coordinates of where the Warp Spawn takes Players
 spawn-location:
   x: -101.5
-  y: 120
+  y: 107
   z: 15.5
   yaw: 180
   pitch: 0
+
+# DO NOT EDIT
+config-version: 1

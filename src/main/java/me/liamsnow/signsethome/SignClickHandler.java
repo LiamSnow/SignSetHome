@@ -1,14 +1,9 @@
-package me.liamsnow.griefpreventionterritorydisplay;
+package me.liamsnow.signsethome;
 
 import me.liamsnow.signsethome.ConfigHandler;
 import me.liamsnow.signsethome.SignSetHome;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,13 +11,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.metadata.MetadataValue;
 
-import java.io.File;
 import java.util.List;
 
 import static me.liamsnow.signsethome.Constants.SIGN_WARP_HOME_META_KEY;
 import static me.liamsnow.signsethome.Constants.SIGN_WARP_SPAWN_META_KEY;
 
-public class SignHandler implements Listener {
+public class SignClickHandler implements Listener {
 
 	@EventHandler
 	public void onSignClick(PlayerInteractEvent event) {

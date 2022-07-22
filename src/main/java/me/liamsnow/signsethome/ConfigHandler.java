@@ -16,32 +16,39 @@ import java.io.IOException;
 import static me.liamsnow.signsethome.Constants.CONFIG_FILE_NAME;
 import static me.liamsnow.signsethome.Constants.FORCE_OVERWRITE_CONFIG_FILE;
 
-public class ConfigHandler {
+public class ConfigHandler implements CommandExecutor {
 
-	private static File configFile;
+	private static File file;
 	private static FileConfiguration config;
 	private static SignSetHome instance;
 
 	public static void init() {
 		instance = SignSetHome.instance;
-		loadConfig();
+		load();
 	}
 
-	public static void loadConfig() {
-		configFile = new File(instance.getDataFolder(), CONFIG_FILE_NAME);
-		boolean configFileExists = configFile.exists();
+	public static void load() {
+		file = new File(instance.getDataFolder(), CONFIG_FILE_NAME);
+		boolean fileExists = file.exists();
 
 		//Make Folder for Config File
-		if (!configFileExists) {
-			configFile.getParentFile().mkdirs();
+		if (!fileExists) {
+			file.getParentFile().mkdirs();
 		}
 
 		//Create Config File (& Overwrite if Asked)
-		if (FORCE_OVERWRITE_CONFIG_FILE || !configFileExists) {
+		if (FORCE_OVERWRITE_CONFIG_FILE || !fileExists) {
 			instance.saveResource(CONFIG_FILE_NAME, FORCE_OVERWRITE_CONFIG_FILE);
 		}
 
-		config = YamlConfiguration.loadConfiguration(configFile);
+		config = YamlConfiguration.loadConfiguration(file);
+	}
+
+	@Override
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+		SignSetHome.instance.getServer().broadcastMessage("Reloading SignSetHome Config!");
+		load();
+		return true;
 	}
 
 	public static Location getSpawnLocation() {

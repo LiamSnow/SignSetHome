@@ -6,8 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SignSetHome extends JavaPlugin {
 	public static SignSetHome instance;
-
-	private GriefPrevention griefPreventionPlugin;
+	public static GriefPrevention griefPrevention;
 
 	@Override
 	public void onEnable() {
@@ -24,7 +23,7 @@ public final class SignSetHome extends JavaPlugin {
 			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
-		griefPreventionPlugin = (GriefPrevention) griefPreventionPlugin;
+		griefPrevention = (GriefPrevention) griefPreventionPlugin;
 
 		//Register Commands
 		getCommand("sethome").setExecutor(new SetHomeCommand());

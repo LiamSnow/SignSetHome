@@ -23,57 +23,61 @@ public class SetHomeCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-		if (sender instanceof Player) {
-			//Get Command Data
-			Player player = (Player) sender;
-			Location playerLocation = player.getLocation();
-			Block playerBlock = playerLocation.getBlock();
+		if (!(sender instanceof Player)) return false;
 
-			//Force Intra-territory Set Homes
-			//TODO
+		//Get Command Data
+		Player player = (Player) sender;
+		Location playerLocation = player.getLocation();
+		Block playerBlock = playerLocation.getBlock();
+		Material playerBlockMaterial = playerBlock.getType();
 
-			//Remove Old Set Home
-			Location oldSetHome = DataHandler.getSetHome(player);
-			if (oldSetHome != null) {
-				Block oldSetHomeBlock = Util.getOverworld().getBlockAt(oldSetHome);
-				if (oldSetHomeBlock.getState() instanceof Sign) {
-					oldSetHomeBlock.setType(Constants.REPLACE_OLD_HOME_MATERIAL);
-					SignSetHome.instance.getServer().broadcastMessage("REPLACED OLD HOME: " + oldSetHome.toString());
-				}
-				else SignSetHome.instance.getServer().broadcastMessage("HAS OLD HOME, bUT NOT SIGN");
-			}
-
-			//If Player is standing in block, Drop It
-			Material blockMaterial = playerBlock.getType();
-			if (blockMaterial.isBlock()) {
-				ItemStack blockAsItem = new ItemStack(blockMaterial);
-				Util.getOverworld().dropItem(playerLocation, blockAsItem);
-			}
-
-			//Place Sign at Feet
-			org.bukkit.block.data.type.Sign signData = (org.bukkit.block.data.type.Sign) Bukkit.createBlockData(Constants.HOME_SIGN_MATERIAL);
-			signData.setRotation(Util.yawToFace(playerLocation.getYaw()));
-			playerBlock.setBlockData(signData);
-			playerBlock.setMetadata(SIGN_WARP_SPAWN_META_KEY,
-			                  new FixedMetadataValue(SignSetHome.instance, true));
-
-			//Set Sign Text
-			Sign sign = (Sign) playerBlock.getState();
-			sign.setLine(0, "" + ChatColor.GREEN + "Warp");
-			sign.setLine(1, "" + ChatColor.GREEN + "to");
-			sign.setLine(2, "" + ChatColor.BOLD + ChatColor.GOLD + "Spawn");
-			sign.setLine(3, "");
-			sign.update();
-
-			//Save New Set Home Location
-			DataHandler.saveSetHome(player, playerLocation);
-
-			//Send Message
-			player.sendMessage("" + ChatColor.GOLD + ChatColor.BOLD + "Set new home!" + ChatColor.RESET + ChatColor.YELLOW + " You can teleport to Spawn with the sign at your feet and teleport back here with the sign at Spawn.");
-
+		//Force Player to not be inside Block
+		if (!playerBlockMaterial.isAir()) {
+			player.sendMessage("" + ChatColor.RED + ChatColor.BOLD + "Error: " + ChatColor.RESET + ChatColor.RED + "You cannot place your home inside a block.");
 			return true;
 		}
 
-		return false;
+		//Force Sign to be on Block
+		Material belowPlayerBlockMaterial = playerBlock.getRelative(BlockFace.DOWN).getType();
+		if (!belowPlayerBlockMaterial.isSolid() || Tag.TRAPDOORS.isTagged(belowPlayerBlockMaterial) || Tag.DOORS.isTagged(belowPlayerBlockMaterial)) {
+			player.sendMessage("" + ChatColor.RED + ChatColor.BOLD + "Error: " + ChatColor.RESET + ChatColor.RED + "You must place your home above a solid block.");
+			return true;
+		}
+
+		//Force Intra-territory Set Homes
+		//TODO
+
+		//Remove Old Set Home
+		Location oldSetHome = DataHandler.getSetHome(player);
+		if (oldSetHome != null) {
+			Block oldSetHomeBlock = Util.getOverworld().getBlockAt(oldSetHome);
+			if (oldSetHomeBlock.getState() instanceof Sign) {
+				oldSetHomeBlock.setType(Constants.REPLACE_OLD_HOME_MATERIAL);
+				player.sendMessage(ChatColor.GRAY + "Removed old home.");
+			}
+		}
+
+		//Place Sign at Feet
+		org.bukkit.block.data.type.Sign signData = (org.bukkit.block.data.type.Sign) Bukkit.createBlockData(Constants.HOME_SIGN_MATERIAL);
+		signData.setRotation(Util.yawToFace(playerLocation.getYaw()));
+		playerBlock.setBlockData(signData);
+		playerBlock.setMetadata(SIGN_WARP_SPAWN_META_KEY,
+		                  new FixedMetadataValue(SignSetHome.instance, true));
+
+		//Set Sign Text
+		Sign sign = (Sign) playerBlock.getState();
+		sign.setLine(0, "" + ChatColor.GREEN + "Warp");
+		sign.setLine(1, "" + ChatColor.GREEN + "to");
+		sign.setLine(2, "" + ChatColor.BOLD + ChatColor.GOLD + "Spawn");
+		sign.setLine(3, "");
+		sign.update();
+
+		//Save New Set Home Location
+		DataHandler.saveSetHome(player, playerLocation);
+
+		//Send Message
+		player.sendMessage("" + ChatColor.GOLD + ChatColor.BOLD + "Set new home!" + ChatColor.RESET + ChatColor.YELLOW + " You can teleport to Spawn with the sign at your feet and teleport back here with the sign at Spawn.");
+
+		return true;
 	}
 }

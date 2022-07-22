@@ -5,16 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0924de86-ea8e-4450-ac16-d3f7da25e033" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/DataHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/data.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/ConfigHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/ConfigHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/ReloadCommand.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SetHomeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SetHomeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SignHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SignClickHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SignSetHome.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SignSetHome.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/Util.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -1,1 +1,1 @@
-copy C:\Users\liams\Documents\GitHub\GriefPrevention-Territory-Display\target\GriefPrevention-Territory-Display-1.0.jar C:\Users\liams\Desktop\server\plugins\GriefPrevention-Territory-Display-1.0.jar /b/v/y
+copy C:\Users\liams\Documents\GitHub\SignSetHome\target\SignSetHome-1.0.jar C:\Users\liams\Desktop\server\plugins\SignSetHome-1.0.jar /b/v/y

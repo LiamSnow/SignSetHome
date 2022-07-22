@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.liamsnow</groupId>
-    <artifactId>GriefPrevention-Territory-Display</artifactId>
+    <artifactId>SignSetHome</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>GriefPrevention-Territory-Display</name>
+    <name>SignSetHome</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -55,7 +55,7 @@
                             <target>
                                 <exec executable="cmd.exe" spawn="true">
                                     <arg value="/c"/>
-                                    <arg value="C:\Users\liams\Documents\GitHub\GriefPrevention-Territory-Display\copy.bat"/>
+                                    <arg value="C:\Users\liams\Documents\GitHub\SignSetHome\copy.bat"/>
                                 </exec>
                             </target>
                         </configuration>

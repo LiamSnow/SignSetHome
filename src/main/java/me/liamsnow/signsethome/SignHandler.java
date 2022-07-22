@@ -6,6 +6,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +14,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.metadata.MetadataValue;
 
+import java.io.File;
 import java.util.List;
 
 import static me.liamsnow.griefpreventionterritorydisplay.Constants.SIGN_WARP_HOME_META_KEY;
@@ -38,14 +40,14 @@ public class SignHandler implements Listener {
 		if (!isWarpSpawn && !isWarpHome) return;
 
 		//Teleport Them
-		player.teleport(new Location(player.getWorld(), -101.5, 107, 15.5, 180, 0));
+		player.teleport(ConfigHandler.getSpawnLocation());
 	}
 
 	private boolean getFirstMetadataValueAsBoolean(List<MetadataValue> values) {
 		int size = values.size();
 		if (size == 0) return false;
 		else {
-			if (size > 1) GriefPreventionTerritoryDisplay.instance.getLogger().warning("GriefPrevention-Territory-Display Error - Multiple Metadatas on Sign");
+			if (size > 1) GriefPreventionTerritoryDisplay.instance.getLogger().warning("SignSetHome Error - Multiple Metadatas on Sign");
 			return values.get(0).asBoolean();
 		}
 	}

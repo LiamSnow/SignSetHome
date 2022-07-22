@@ -1,6 +1,6 @@
-name: GriefPrevention-Territory-Display
+name: SignSetHome
 version: '${project.version}'
-main: me.liamsnow.griefpreventionterritorydisplay.GriefPreventionTerritoryDisplay
+main: me.liamsnow.signsethome.SignSetHome
 api-version: 1.19
 authors: [ LiamSnow ]
 website: https://liamsnow.com

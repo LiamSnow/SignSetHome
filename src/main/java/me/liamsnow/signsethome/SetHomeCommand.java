@@ -1,4 +1,4 @@
-package me.liamsnow.griefpreventionterritorydisplay;
+package me.liamsnow.signsethome;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -19,7 +19,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.jetbrains.annotations.NotNull;
 
-import static me.liamsnow.griefpreventionterritorydisplay.Constants.SIGN_WARP_SPAWN_META_KEY;
+import static me.liamsnow.signsethome.Constants.SIGN_WARP_SPAWN_META_KEY;
 
 public class SetHomeCommand implements CommandExecutor {
 
@@ -31,12 +31,6 @@ public class SetHomeCommand implements CommandExecutor {
 			World world = player.getWorld();
 			Location location = player.getLocation();
 			Block block = location.getBlock();
-
-			//Force Overworld Set Homes
-//			if (world.getEnvironment() != Environment.NORMAL) {
-//				player.sendMessage("You must be in the overworld to set your home!");
-//				return false;
-//			}
 
 			//Force Intra-territory Set Homes
 			//TODO
@@ -51,7 +45,7 @@ public class SetHomeCommand implements CommandExecutor {
 			//Place Sign at Feet
 			block.setType(Material.OAK_SIGN);
 			block.setMetadata(SIGN_WARP_SPAWN_META_KEY,
-			                  new FixedMetadataValue(GriefPreventionTerritoryDisplay.instance, true));
+			                  new FixedMetadataValue(SignSetHome.instance, true));
 
 			//Set Sign Text
 			Sign sign = (Sign) block.getState();

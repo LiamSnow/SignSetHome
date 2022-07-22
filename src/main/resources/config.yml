@@ -1,0 +1,10 @@
+# DO NOT EDIT
+config-version: 1
+
+
+spawn-location:
+  x: -101.5
+  y: 120
+  z: 15.5
+  yaw: 180
+  pitch: 0

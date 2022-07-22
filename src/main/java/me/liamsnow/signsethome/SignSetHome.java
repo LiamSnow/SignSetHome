@@ -14,7 +14,7 @@ public final class SignSetHome extends JavaPlugin {
 		instance = this;
 
 		//Load Config
-		ConfigHandler.loadConfig();
+		ConfigHandler.init();
 
 		//Load GriefPrevention Plugin
 		Plugin griefPreventionPlugin = getServer().getPluginManager().getPlugin("GriefPrevention");
@@ -23,18 +23,19 @@ public final class SignSetHome extends JavaPlugin {
 			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}
-		this.griefPreventionPlugin = (GriefPrevention) griefPreventionPlugin;
+		griefPreventionPlugin = (GriefPrevention) griefPreventionPlugin;
 
-		//Register Set Home Command
-		this.getCommand("sethome").setExecutor(new SetHomeCommand());
+		//Register Commands
+		getCommand("sethome").setExecutor(new SetHomeCommand());
+		getCommand("signsethomereload").setExecutor(new ReloadCommand());
 
-		//Register Sign Event Handler
-		getServer().getPluginManager().registerEvents(new SignHandler(), this);
+		//Register Event Handlers
+		getServer().getPluginManager().registerEvents(new me.liamsnow.griefpreventionterritorydisplay.SignHandler(), this);
 
 		//Register Event for @ Territory Claim
 
 		//Log
-		getLogger().info("Enabled SignSetHome");
+		getLogger().info("Enabled SignSetHome!");
 	}
 
 	@Override

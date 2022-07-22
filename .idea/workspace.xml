@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0924de86-ea8e-4450-ac16-d3f7da25e033" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/ConfigHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SignSetHome.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SignSetHome.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SetHomeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SetHomeCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/ReloadCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/Util.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/ConfigHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/ConfigHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SignHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SignHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SignSetHome.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SignSetHome.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +60,7 @@
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/liams/Documents/GitHub/SignSetHome/GriefPrevention.jar&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/liams/Documents/GitHub/SignSetHome&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,

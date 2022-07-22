@@ -9,3 +9,8 @@ commands:
   sethome:
     description: Sets your home location that can be teleported to from Spawn.
     usage: /<command>
+  sshreload:
+    description: Reloads the configuration for SignSetHome.
+    usage: /<command>
+    aliases: [signsethomereload]
+

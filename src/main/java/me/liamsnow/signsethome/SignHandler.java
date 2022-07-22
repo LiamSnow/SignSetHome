@@ -1,5 +1,7 @@
 package me.liamsnow.griefpreventionterritorydisplay;
 
+import me.liamsnow.signsethome.ConfigHandler;
+import me.liamsnow.signsethome.SignSetHome;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -17,8 +19,8 @@ import org.bukkit.metadata.MetadataValue;
 import java.io.File;
 import java.util.List;
 
-import static me.liamsnow.griefpreventionterritorydisplay.Constants.SIGN_WARP_HOME_META_KEY;
-import static me.liamsnow.griefpreventionterritorydisplay.Constants.SIGN_WARP_SPAWN_META_KEY;
+import static me.liamsnow.signsethome.Constants.SIGN_WARP_HOME_META_KEY;
+import static me.liamsnow.signsethome.Constants.SIGN_WARP_SPAWN_META_KEY;
 
 public class SignHandler implements Listener {
 
@@ -47,7 +49,7 @@ public class SignHandler implements Listener {
 		int size = values.size();
 		if (size == 0) return false;
 		else {
-			if (size > 1) GriefPreventionTerritoryDisplay.instance.getLogger().warning("SignSetHome Error - Multiple Metadatas on Sign");
+			if (size > 1) SignSetHome.instance.getLogger().warning("SignSetHome Error - Multiple Metadatas on Sign");
 			return values.get(0).asBoolean();
 		}
 	}

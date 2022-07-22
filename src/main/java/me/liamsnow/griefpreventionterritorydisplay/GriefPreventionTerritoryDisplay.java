@@ -24,14 +24,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public final class GriefPreventionTerritoryDisplay extends JavaPlugin {
+	public static GriefPreventionTerritoryDisplay instance;
 
-	GriefPrevention griefPreventionPlugin;
-
-	private final long LOOP_DELAY = 40l; //2 seconds
-	private final long LOOP_PERIOD = 20l;// * 60l * 5l; //5 minutes
+	private GriefPrevention griefPreventionPlugin;
 
 	@Override
 	public void onEnable() {
+		instance = this;
+
 //		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
 //			getServer().broadcastMessage("Update");
 //
@@ -59,47 +59,18 @@ public final class GriefPreventionTerritoryDisplay extends JavaPlugin {
 		//Load Config
 		//TODO
 
-		//Run Loop
-		startLoop();
+		//Register Set Home Command
+		this.getCommand("sethome").setExecutor(new SetHomeCommand());
+
+		//Register Sign Event Handler
+		getServer().getPluginManager().registerEvents(new SignHandler(), this);
 
 		//Log
 		getServer().broadcastMessage("Enabled GriefPrevention-Territory-Display");
 		getLogger().info("Enabled GriefPrevention-Territory-Display");
 	}
 
-	private void startLoop() {
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this::loop, LOOP_DELAY, LOOP_PERIOD);
-//		BukkitRunnable runnable = new BukkitRunnable() { public void run() { loop(); } };
-//		runnable.runTask(this, LOOP_DELAY, LOOP_PERIOD);
-	}
+	//Register Event for @ Territory Claim
 
-	private void loop() {
-		Collection<Claim> claims = griefPreventionPlugin.dataStore.getClaims();
 
-		for (Claim claim : claims) {
-			Block block = getServer().getWorld("world").getBlockAt(-109, 107, 14);
-			block.setType(Material.OAK_WALL_SIGN);
-
-			String ownerName = claim.getOwnerName();
-			Location coordA = claim.getLesserBoundaryCorner(), coordB = claim.getGreaterBoundaryCorner();
-
-			Sign sign = (Sign) block.getState();
-			sign.setLine(0, ownerName + "'s");
-			sign.setLine(1, "Claim");
-			sign.setLine(2, locationToCoordinateString(coordA));
-			sign.setLine(3, locationToCoordinateString(coordB));
-			sign.update();
-		}
-
-//		getServer().broadcastMessage();
-	}
-
-	private String locationToCoordinateString(Location location) {
-		return "x: " + location.getBlockX() + ", z: " + location.getBlockZ();
-	}
-
-	@Override
-	public void onDisable() {
-		getServer().getScheduler().cancelTasks(this);
-	}
 }

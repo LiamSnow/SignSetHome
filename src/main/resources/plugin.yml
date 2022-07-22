@@ -3,5 +3,9 @@ version: '${project.version}'
 main: me.liamsnow.griefpreventionterritorydisplay.GriefPreventionTerritoryDisplay
 api-version: 1.19
 authors: [ LiamSnow ]
-depend: ['GriefPrevention']
 website: https://liamsnow.com
+depend: ['GriefPrevention']
+commands:
+  sethome:
+    description: Sets your home location that can be teleported to from Spawn.
+    usage: /<command>

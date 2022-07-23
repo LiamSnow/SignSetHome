@@ -1,5 +1,6 @@
-package me.liamsnow.signsethome;
+package me.liamsnow.signsethome.commands;
 
+import me.liamsnow.signsethome.*;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.DataStore;
@@ -15,7 +16,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
@@ -52,7 +52,7 @@ public class SetHomeCommand implements CommandExecutor {
 		if (!inOwnTerritory) {
 			StringBuilder message = new StringBuilder();
 
-			player.sendMessage("" + ChatColor.RED + ChatColor.BOLD + "Error: " + ChatColor.RED +
+			player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Error: " + ChatColor.RED +
 				"You must place your home inside your territory or territory that you're trusted in. " + ChatColor.GRAY + "" + ChatColor.ITALIC +
 				(inWilderness ? "You can claim territory by right clicking a piece of paper." :
 				"Have the owner trust you by using /trust " + player.getDisplayName() + ".")
@@ -62,7 +62,7 @@ public class SetHomeCommand implements CommandExecutor {
 
 		//Force Player to not be inside Block
 		if (!playerBlockMaterial.isAir()) {
-			player.sendMessage("" + ChatColor.RED + ChatColor.BOLD + "Error: " + ChatColor.RESET + ChatColor.RED +
+			player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Error: " + ChatColor.RESET + "" + ChatColor.RED +
 					                   "You cannot place your home inside a block.");
 			return true;
 		}
@@ -70,19 +70,16 @@ public class SetHomeCommand implements CommandExecutor {
 		//Force Sign to be on Block
 		Material belowPlayerBlockMaterial = playerBlock.getRelative(BlockFace.DOWN).getType();
 		if (!belowPlayerBlockMaterial.isSolid() || Tag.TRAPDOORS.isTagged(belowPlayerBlockMaterial) || Tag.DOORS.isTagged(belowPlayerBlockMaterial)) {
-			player.sendMessage("" + ChatColor.RED + ChatColor.BOLD + "Error: " + ChatColor.RESET + ChatColor.RED +
+			player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Error: " + ChatColor.RESET + "" + ChatColor.RED +
 					                   "You must place your home above a solid block.");
 			return true;
 		}
 
 		//Remove Old Set Home
-		Location oldSetHome = DataHandler.getSetHome(player);
-		if (oldSetHome != null) {
-			Block oldSetHomeBlock = Util.getOverworld().getBlockAt(oldSetHome);
-			if (oldSetHomeBlock.getState() instanceof Sign) {
-				oldSetHomeBlock.setType(Constants.REPLACE_OLD_HOME_MATERIAL);
-				player.sendMessage(ChatColor.GRAY + "Removed old home.");
-			}
+		Location oldSetHome = DataHandler.getHomeLocation(player);
+		if (Util.isSignAtLocation(oldSetHome)) {
+			oldSetHome.getBlock().setType(Constants.REPLACE_OLD_HOME_MATERIAL);
+			player.sendMessage(ChatColor.GRAY + "Removed old home.");
 		}
 
 		//Place Sign at Feet
@@ -90,23 +87,39 @@ public class SetHomeCommand implements CommandExecutor {
 		signData.setRotation(Util.yawToFace(playerLocation.getYaw()));
 		playerBlock.setBlockData(signData);
 
-		//Set Sign Text
+		//Tag Sign as Warp Spawn
 		Sign sign = (Sign) playerBlock.getState();
-		sign.setLine(0, "" + ChatColor.GREEN + "Warp");
-		sign.setLine(1, "" + ChatColor.GREEN + "to");
-		sign.setLine(2, "" + ChatColor.BOLD + ChatColor.GOLD + "Spawn");
+		PersistentDataContainer signPersistentData = sign.getPersistentDataContainer();
+		signPersistentData.set(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_TAG_KEY), PersistentDataType.INTEGER, Constants.TAG_SIGN_WARP_SPAWN);
+		signPersistentData.set(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_UUID_KEY), PersistentDataType.STRING, player.getUniqueId().toString());
+
+		//Set Sign Text
+		sign.setLine(0, ChatColor.GREEN + "Warp to");
+		sign.setLine(1, ChatColor.GOLD + "" + ChatColor.BOLD + "Spawn");
+		sign.setLine(2, "");
 		sign.setLine(3, "");
 		sign.update();
 
-		//Tag Sign as Warp Spawn
-		PersistentDataContainer signPersistentData = sign.getPersistentDataContainer();
-		signPersistentData.set(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_KEY), PersistentDataType.INTEGER, Constants.TAG_SIGN_WARP_SPAWN);
-
 		//Save New Set Home Location
-		DataHandler.saveSetHome(player, playerLocation);
+		DataHandler.saveHomeLocation(player, playerLocation);
 
-		//Send Message
-		player.sendMessage("" + ChatColor.GOLD + ChatColor.BOLD + "Set new home!" + ChatColor.RESET + ChatColor.YELLOW + " You can teleport to Spawn with the sign at your feet and teleport back here with the sign at Spawn.");
+		//Has Warp Sign
+		if (Util.isSignAtLocation(DataHandler.getWarpSignLocation(player))) {
+			player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Set new home!" + ChatColor.RESET + "" + ChatColor.YELLOW +
+					                   " You can teleport to Spawn with the sign at your feet and teleport back here with your claimed sign at Spawn.");
+		}
+
+		//Needs to Claim Warp Sign
+		else {
+			//Teleport to Warp Lobby
+			player.teleport(ConfigHandler.getWarpLobbyLocation());
+
+			//Send Message
+			player.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "Set Home!", ChatColor.YELLOW + "" + ChatColor.ITALIC + "Right-Click to Claim a Warp Sign", 10, 70, 20);
+			player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Set new home!" + ChatColor.YELLOW + "" + ChatColor.ITALIC +
+					                   " Right-Click to Claim a Warp Sign at Spawn. You can teleport to your new home with your claimed sign and back to spawn with the sign at your home.");
+
+		}
 
 		return true;
 	}

@@ -1,6 +1,9 @@
 package me.liamsnow.signsethome;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -44,17 +47,45 @@ public class DataHandler {
 		}
 	}
 
-	public static Location getSetHome(Player player) {
-		List<Integer> locList = data.getIntegerList(player.getUniqueId().toString());
-		if (locList.size() < 4) return null;
+	private static Location readLocation(String key) {
+		double x = data.getDouble(key + ".x", Double.MAX_VALUE);
+		double y = data.getDouble(key + ".y", Double.MAX_VALUE);
+		double z = data.getDouble(key + ".z", Double.MAX_VALUE);
+		float yaw = (float) data.getDouble(key + ".yaw", Double.MAX_VALUE);
+		float pitch = (float) data.getDouble(key + ".pitch", Double.MAX_VALUE);
 
-		return new Location(Util.getOverworld(), locList.get(0), locList.get(1), locList.get(2), locList.get(3), 0f);
+		if (Arrays.asList(x, y, z, yaw, pitch).contains(Double.MAX_VALUE)) return null;
+
+		return new Location(Util.getOverworld(), x, y, z, yaw, 0);
+	}
+	private static void saveLocation(String key, Location location) {
+		data.set(key + ".x", location.getX());
+		data.set(key + ".y", location.getY());
+		data.set(key + ".z", location.getZ());
+		data.set(key + ".yaw", location.getYaw());
+	}
+	public static Location getHomeLocation(String UUID) {
+		return readLocation(UUID + ".home");
+	}
+	public static Location getHomeLocation(Player player) {
+		return getHomeLocation(player.getUniqueId().toString());
 	}
 
-	public static void saveSetHome(Player player, Location location) {
-		List<Integer> locList = Arrays.asList(location.getBlockX(), location.getBlockY(), location.getBlockZ(), Math.round(location.getYaw()));
-		data.set(player.getUniqueId().toString(), locList);
-		save(); //FIXME ?
+	public static void saveHomeLocation(Player player, Location location) {
+		saveLocation(player.getUniqueId().toString() + ".home", location);
+		save();
+	}
+
+	public static Location getWarpSignLocation(String UUID) {
+		return readLocation(UUID + ".warp-sign");
+	}
+	public static Location getWarpSignLocation(Player player) {
+		return getWarpSignLocation(player.getUniqueId().toString());
+	}
+
+	public static void saveWarpSignLocation(Player player, Location location) {
+		saveLocation(player.getUniqueId().toString() + ".warp-sign", location);
+		save();
 	}
 
 }

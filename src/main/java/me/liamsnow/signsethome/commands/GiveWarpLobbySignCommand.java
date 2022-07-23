@@ -1,5 +1,7 @@
-package me.liamsnow.signsethome;
+package me.liamsnow.signsethome.commands;
 
+import me.liamsnow.signsethome.Constants;
+import me.liamsnow.signsethome.SignSetHome;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -39,16 +41,16 @@ public class GiveWarpLobbySignCommand implements CommandExecutor {
 		BlockStateMeta signBlockStateMeta = (BlockStateMeta) signItemMeta;
 		Sign signBlockState = (Sign) signBlockStateMeta.getBlockState();
 
-		//Edit Sign Text
-		signBlockState.setLine(0, "Yolo");
-		signBlockState.setLine(1, "Yolo");
-		signBlockState.setLine(2, "Yolo");
-		signBlockState.setLine(3, "Yolo");
-		signBlockState.update();
-
 		//Tag Sign as Warp Spawn
 		PersistentDataContainer signPersistentData = signBlockState.getPersistentDataContainer();
-		signPersistentData.set(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_KEY), PersistentDataType.INTEGER, Constants.TAG_SIGN_WARP_HOME_UNCLAIMED);
+		signPersistentData.set(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_TAG_KEY), PersistentDataType.INTEGER, Constants.TAG_SIGN_WARP_HOME_UNCLAIMED);
+
+		//Edit Sign Text
+		signBlockState.setLine(0, ChatColor.BLUE + "Right Click");
+		signBlockState.setLine(1, ChatColor.GRAY + "to Claim this");
+		signBlockState.setLine(2, ChatColor.GRAY + "Set Home Sign");
+		signBlockState.update();
+
 
 		//Save Item & Block Data
 		signBlockStateMeta.setBlockState(signBlockState);
@@ -58,7 +60,8 @@ public class GiveWarpLobbySignCommand implements CommandExecutor {
 		player.getInventory().addItem(signItem);
 
 		//Send message to Player
-		SignSetHome.instance.getServer().broadcastMessage("Place as many of these signs in the Warp Lobby for players to use!");
+		SignSetHome.instance.getServer().broadcastMessage(ChatColor.GREEN + "Given Warp Lobby Sign. " + ChatColor.GRAY + "" + ChatColor.ITALIC +
+				                                                  "Place as many of these signs in the Warp Lobby for players to use!");
 
 		return true;
 	}

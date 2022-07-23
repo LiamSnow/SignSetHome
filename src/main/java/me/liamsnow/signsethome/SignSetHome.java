@@ -1,5 +1,6 @@
 package me.liamsnow.signsethome;
 
+import me.liamsnow.signsethome.commands.*;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,7 +28,7 @@ public final class SignSetHome extends JavaPlugin {
 
 		//Register Commands
 		getCommand("sethome").setExecutor(new SetHomeCommand());
-		getCommand("signsethome-reload").setExecutor(new ConfigHandler());
+		getCommand("signsethome-reload").setExecutor(new ReloadCommand());
 		getCommand("signsethome-setspawn").setExecutor(new SetSpawnCommand());
 		getCommand("signsethome-setwarplobby").setExecutor(new SetWarpLobbyCommand());
 		getCommand("signsethome-givewarplobbysign").setExecutor(new GiveWarpLobbySignCommand());

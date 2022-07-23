@@ -2,12 +2,19 @@ package me.liamsnow.signsethome;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Sign;
 
 public class Util {
 
 	public static World getOverworld() {
 		return SignSetHome.instance.getServer().getWorlds().get(0);
+	}
+
+	public static boolean isSignAtLocation(Location location) {
+		if (location == null) return false;
+		return location.getBlock().getState() instanceof Sign;
 	}
 
 	/* Credit to K3ttle (spigotmc.org) */

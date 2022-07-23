@@ -16,7 +16,8 @@ public class Constants {
 	public static Material WARP_HOME_SIGN_MATERIAL = Material.OAK_SIGN;
 	public static Material REPLACE_OLD_HOME_MATERIAL = Material.AIR;
 
-	public static String PERSISTENT_DATA_KEY = "signsethome";
+	public static String PERSISTENT_DATA_TAG_KEY = "signsethome-tag";
+	public static String PERSISTENT_DATA_UUID_KEY = "signsethome-uuid";
 	public static int TAG_SIGN_WARP_SPAWN = 34;
 	public static int TAG_SIGN_WARP_HOME_UNCLAIMED = 5104;
 	public static int TAG_SIGN_WARP_HOME_CLAIMED = 254;

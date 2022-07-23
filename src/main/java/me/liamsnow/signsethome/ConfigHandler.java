@@ -16,7 +16,7 @@ import java.io.IOException;
 import static me.liamsnow.signsethome.Constants.CONFIG_FILE_NAME;
 import static me.liamsnow.signsethome.Constants.FORCE_OVERWRITE_CONFIG_FILE;
 
-public class ConfigHandler implements CommandExecutor {
+public class ConfigHandler {
 
 	private static File file;
 	private static FileConfiguration config;
@@ -53,15 +53,7 @@ public class ConfigHandler implements CommandExecutor {
 		}
 	}
 
-	@Override
-	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-		SignSetHome.instance.getServer().broadcastMessage("Reloading SignSetHome Config!");
-		load();
-
-		return true;
-	}
-
-	public static Location readLocation(String key) {
+	private static Location readLocation(String key) {
 		double x = config.getDouble(key + ".x");
 		double y = config.getDouble(key + ".y");
 		double z = config.getDouble(key + ".z");
@@ -69,7 +61,7 @@ public class ConfigHandler implements CommandExecutor {
 		float pitch = (float) config.getDouble(key + ".pitch");
 		return new Location(Util.getOverworld(), x, y, z, yaw, pitch);
 	}
-	public static void saveLocation(String key, Location location) {
+	private static void saveLocation(String key, Location location) {
 		config.set(key + ".x", location.getX());
 		config.set(key + ".y", location.getY());
 		config.set(key + ".z", location.getZ());

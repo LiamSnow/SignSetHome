@@ -3,7 +3,7 @@
 # Coordinates for Spawn (used by warp spawn sign)
 spawn-location:
   x: -101.5
-  y: 107
+  y: 108
   z: 15.5
   yaw: 180
   pitch: 0

@@ -114,7 +114,6 @@ public class SignClickHandler implements Listener {
 			return "Your Home!";
 		}
 		else {
-			SignSetHome.instance.getLogger().severe("'" + ownerUUID + "' != '" + usingPlayer.getUniqueId() + "'");
 			return DataHandler.getUsername(ownerUUID) + "'s Home!";
 		}
 	}

@@ -35,14 +35,13 @@ public final class SignSetHome extends JavaPlugin {
 		//Register Event Handlers
 		getServer().getPluginManager().registerEvents(new SignClickHandler(), this);
 
-		//Register Event for @ Territory Claim
-
 		//Log
 		getLogger().info("Enabled SignSetHome!");
 	}
 
 	@Override
 	public void onDisable() {
-
+		ConfigHandler.save();
+		DataHandler.save();
 	}
 }

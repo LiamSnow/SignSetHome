@@ -12,8 +12,8 @@ public class SetSpawnCommand implements CommandExecutor {
 		if (!(sender instanceof Player)) return false;
 		Player player = (Player) sender;
 
-		SignSetHome.instance.getServer().broadcastMessage("Set SignSetHome Spawn!");
 		ConfigHandler.setSpawnLocation(player.getLocation());
+		SignSetHome.instance.getServer().broadcastMessage("Set SignSetHome Spawn!");
 
 		return true;
 	}

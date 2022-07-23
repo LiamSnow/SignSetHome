@@ -5,12 +5,9 @@ import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.DataStore;
 import me.ryanhamshire.GriefPrevention.PlayerData;
 import org.bukkit.*;
-import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.type.Stairs;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,14 +15,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
-
-import static me.liamsnow.signsethome.Constants.SIGN_WARP_SPAWN_META_KEY;
 
 public class SetHomeCommand implements CommandExecutor {
 
@@ -94,8 +89,6 @@ public class SetHomeCommand implements CommandExecutor {
 		org.bukkit.block.data.type.Sign signData = (org.bukkit.block.data.type.Sign) Bukkit.createBlockData(Constants.HOME_SIGN_MATERIAL);
 		signData.setRotation(Util.yawToFace(playerLocation.getYaw()));
 		playerBlock.setBlockData(signData);
-		playerBlock.setMetadata(SIGN_WARP_SPAWN_META_KEY,
-		                  new FixedMetadataValue(SignSetHome.instance, true));
 
 		//Set Sign Text
 		Sign sign = (Sign) playerBlock.getState();
@@ -104,6 +97,10 @@ public class SetHomeCommand implements CommandExecutor {
 		sign.setLine(2, "" + ChatColor.BOLD + ChatColor.GOLD + "Spawn");
 		sign.setLine(3, "");
 		sign.update();
+
+		//Tag Sign as Warp Spawn
+		PersistentDataContainer signPersistentData = sign.getPersistentDataContainer();
+		signPersistentData.set(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_KEY), PersistentDataType.INTEGER, Constants.TAG_SIGN_WARP_SPAWN);
 
 		//Save New Set Home Location
 		DataHandler.saveSetHome(player, playerLocation);

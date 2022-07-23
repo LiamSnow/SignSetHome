@@ -13,9 +13,12 @@ public class Constants {
 	public static String DATA_FILE_NAME = "data.yml";
 
 	public static Material HOME_SIGN_MATERIAL = Material.OAK_SIGN;
+	public static Material WARP_HOME_SIGN_MATERIAL = Material.OAK_SIGN;
 	public static Material REPLACE_OLD_HOME_MATERIAL = Material.AIR;
 
-	public static String SIGN_WARP_SPAWN_META_KEY = "signsethome-warp-spawn";
-	public static String SIGN_WARP_HOME_META_KEY = "signsethome-warp-home";
+	public static String PERSISTENT_DATA_KEY = "signsethome";
+	public static int TAG_SIGN_WARP_SPAWN = 34;
+	public static int TAG_SIGN_WARP_HOME_UNCLAIMED = 5104;
+	public static int TAG_SIGN_WARP_HOME_CLAIMED = 254;
 
 }

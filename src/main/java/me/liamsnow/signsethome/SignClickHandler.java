@@ -2,6 +2,7 @@ package me.liamsnow.signsethome;
 
 import me.liamsnow.signsethome.ConfigHandler;
 import me.liamsnow.signsethome.SignSetHome;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -10,11 +11,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.metadata.MetadataValue;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
-
-import static me.liamsnow.signsethome.Constants.SIGN_WARP_HOME_META_KEY;
-import static me.liamsnow.signsethome.Constants.SIGN_WARP_SPAWN_META_KEY;
 
 public class SignClickHandler implements Listener {
 
@@ -30,13 +30,23 @@ public class SignClickHandler implements Listener {
 		if (block == null) return;
 		if (!(block.getState() instanceof Sign)) return;
 
-		//Is Warp
-		boolean isWarpSpawn = getFirstMetadataValueAsBoolean(block.getMetadata(SIGN_WARP_SPAWN_META_KEY));
-		boolean isWarpHome = getFirstMetadataValueAsBoolean(block.getMetadata(SIGN_WARP_HOME_META_KEY));
-		if (!isWarpSpawn && !isWarpHome) return;
+		//Check if Warp
+		PersistentDataContainer signPersistentData = ((Sign) block.getState()).getPersistentDataContainer();
+		int signPersistentDataValue = signPersistentData.get(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_KEY), PersistentDataType.INTEGER);
+		boolean isWarpSpawn = signPersistentDataValue == Constants.TAG_SIGN_WARP_SPAWN;
+
+		player.sendMessage(signPersistentDataValue + "," + (signPersistentDataValue == Constants.TAG_SIGN_WARP_HOME_UNCLAIMED));
+
+		boolean isClaimedWarpHome = signPersistentDataValue == Constants.TAG_SIGN_WARP_HOME_CLAIMED;
+		if (!isWarpSpawn && !isClaimedWarpHome) return;
 
 		//Teleport Them
-		player.teleport(ConfigHandler.getSpawnLocation());
+		if (isWarpSpawn) {
+			player.teleport(ConfigHandler.getSpawnLocation());
+		}
+		else {
+			//TODO
+		}
 	}
 
 	private boolean getFirstMetadataValueAsBoolean(List<MetadataValue> values) {

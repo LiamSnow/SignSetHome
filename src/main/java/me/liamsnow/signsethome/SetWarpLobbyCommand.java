@@ -12,8 +12,8 @@ public class SetWarpLobbyCommand implements CommandExecutor {
 		if (!(sender instanceof Player)) return false;
 		Player player = (Player) sender;
 
-		SignSetHome.instance.getServer().broadcastMessage("Set SignSetHome Warp Lobby!");
 		ConfigHandler.setWarpLobbyLocation(player.getLocation());
+		SignSetHome.instance.getServer().broadcastMessage("Set SignSetHome Warp Lobby!");
 
 		return true;
 	}

@@ -1,11 +1,19 @@
 # This File Contains the Configurations for SignSetHome
 
-# Coordinates of where the Warp Spawn takes Players
+# Coordinates for Spawn (used by warp spawn sign)
 spawn-location:
   x: -101.5
   y: 107
   z: 15.5
   yaw: 180
+  pitch: 0
+
+# Coordinates for Warp Lobby (used for player to pick their spawn sign)
+warp-lobby-location:
+  x: -112.5
+  y: 106
+  z: 26.5
+  yaw: 45
   pitch: 0
 
 # DO NOT EDIT

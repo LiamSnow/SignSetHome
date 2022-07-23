@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0924de86-ea8e-4450-ac16-d3f7da25e033" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/GiveWarpLobbySignCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SetSpawnCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SetWarpLobbyCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/ConfigHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/ConfigHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/DataHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/DataHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SetHomeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SetHomeCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SignSetHome.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/SignSetHome.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

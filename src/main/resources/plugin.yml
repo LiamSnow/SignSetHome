@@ -9,8 +9,25 @@ commands:
   sethome:
     description: Sets your home location that can be teleported to from Spawn.
     usage: /<command>
-  sshreload:
+    default: true
+  signsethome-reload:
     description: Reloads the configuration for SignSetHome.
     usage: /<command>
-    aliases: [signsethomereload]
+    aliases: [ssh-reload]
+    default: op
+  signsethome-setspawn:
+    description: Sets the spawn for SignSetHome.
+    usage: /<command>
+    aliases: [ ssh-setspawn ]
+    default: op
+  signsethome-setwarplobby:
+    description: Sets the warp lobby for SignSetHome.
+    usage: /<command>
+    aliases: [ ssh-setwarplobby ]
+    default: op
+  signsethome-givewarplobbysign:
+    description: Gives player the special warp lobby sign.
+    usage: /<command>
+    aliases: [ ssh-givewarplobbysign ]
+    default: op
 

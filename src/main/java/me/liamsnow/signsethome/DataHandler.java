@@ -35,6 +35,15 @@ public class DataHandler {
 		data = YamlConfiguration.loadConfiguration(file);
 	}
 
+	public static void save() {
+		try {
+			data.save(file);
+		} catch (IOException e) {
+			SignSetHome.instance.getLogger().severe(e.getMessage());
+			throw new RuntimeException(e);
+		}
+	}
+
 	public static Location getSetHome(Player player) {
 		List<Integer> locList = data.getIntegerList(player.getUniqueId().toString());
 		if (locList.size() < 4) return null;
@@ -45,13 +54,7 @@ public class DataHandler {
 	public static void saveSetHome(Player player, Location location) {
 		List<Integer> locList = Arrays.asList(location.getBlockX(), location.getBlockY(), location.getBlockZ(), Math.round(location.getYaw()));
 		data.set(player.getUniqueId().toString(), locList);
-
-		try {
-			//FIXME ?
-			data.save(file);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		save(); //FIXME ?
 	}
 
 }

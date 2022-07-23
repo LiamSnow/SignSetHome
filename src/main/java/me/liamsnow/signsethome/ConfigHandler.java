@@ -44,19 +44,52 @@ public class ConfigHandler implements CommandExecutor {
 		config = YamlConfiguration.loadConfiguration(file);
 	}
 
+	public static void save() {
+		try {
+			config.save(file);
+		} catch (IOException e) {
+			SignSetHome.instance.getLogger().severe(e.getMessage());
+			throw new RuntimeException(e);
+		}
+	}
+
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 		SignSetHome.instance.getServer().broadcastMessage("Reloading SignSetHome Config!");
 		load();
+
 		return true;
 	}
 
-	public static Location getSpawnLocation() {
-		double x = config.getDouble("spawn-location.x");
-		double y = config.getDouble("spawn-location.y");
-		double z = config.getDouble("spawn-location.z");
-		float yaw = (float) config.getDouble("spawn-location.yaw");
-		float pitch = (float) config.getDouble("spawn-location.pitch");
+	public static Location readLocation(String key) {
+		double x = config.getDouble(key + ".x");
+		double y = config.getDouble(key + ".y");
+		double z = config.getDouble(key + ".z");
+		float yaw = (float) config.getDouble(key + ".yaw");
+		float pitch = (float) config.getDouble(key + ".pitch");
 		return new Location(Util.getOverworld(), x, y, z, yaw, pitch);
 	}
+	public static void saveLocation(String key, Location location) {
+		config.set(key + ".x", location.getX());
+		config.set(key + ".y", location.getY());
+		config.set(key + ".z", location.getZ());
+		config.set(key + ".yaw", location.getYaw());
+		config.set(key + ".pitch", location.getPitch());
+	}
+
+	public static Location getSpawnLocation() {
+		return readLocation("spawn-location");
+	}
+	public static void setSpawnLocation(Location location) {
+		saveLocation("spawn-location", location);
+	}
+
+	public static Location getWarpLobbyLocation() {
+		return readLocation("warp-lobby-location");
+	}
+	public static void setWarpLobbyLocation(Location location) {
+		saveLocation("warp-lobby-location", location);
+	}
+
+
 }

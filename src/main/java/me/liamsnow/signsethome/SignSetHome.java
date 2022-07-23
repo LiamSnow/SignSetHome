@@ -27,7 +27,10 @@ public final class SignSetHome extends JavaPlugin {
 
 		//Register Commands
 		getCommand("sethome").setExecutor(new SetHomeCommand());
-		getCommand("signsethomereload").setExecutor(new ConfigHandler());
+		getCommand("signsethome-reload").setExecutor(new ConfigHandler());
+		getCommand("signsethome-setspawn").setExecutor(new SetSpawnCommand());
+		getCommand("signsethome-setwarplobby").setExecutor(new SetWarpLobbyCommand());
+		getCommand("signsethome-givewarplobbysign").setExecutor(new GiveWarpLobbySignCommand());
 
 		//Register Event Handlers
 		getServer().getPluginManager().registerEvents(new SignClickHandler(), this);

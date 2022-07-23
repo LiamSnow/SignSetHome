@@ -39,21 +39,6 @@ public class SetHomeCommand implements CommandExecutor {
 		Block playerBlock = playerLocation.getBlock();
 		Material playerBlockMaterial = playerBlock.getType();
 
-		//Force Player to not be inside Block
-		if (!playerBlockMaterial.isAir()) {
-			player.sendMessage("" + ChatColor.RED + ChatColor.BOLD + "Error: " + ChatColor.RESET + ChatColor.RED +
-					                   "You cannot place your home inside a block.");
-			return true;
-		}
-
-		//Force Sign to be on Block
-		Material belowPlayerBlockMaterial = playerBlock.getRelative(BlockFace.DOWN).getType();
-		if (!belowPlayerBlockMaterial.isSolid() || Tag.TRAPDOORS.isTagged(belowPlayerBlockMaterial) || Tag.DOORS.isTagged(belowPlayerBlockMaterial)) {
-			player.sendMessage("" + ChatColor.RED + ChatColor.BOLD + "Error: " + ChatColor.RESET + ChatColor.RED +
-					                   "You must place your home above a solid block.");
-			return true;
-		}
-
 		//Force Intra-territory Set Homes
 		boolean inOwnTerritory = false;
 		boolean inWilderness = true;
@@ -77,6 +62,21 @@ public class SetHomeCommand implements CommandExecutor {
 				(inWilderness ? "You can claim territory by right clicking a piece of paper." :
 				"Have the owner trust you by using /trust " + player.getDisplayName() + ".")
 			);
+			return true;
+		}
+
+		//Force Player to not be inside Block
+		if (!playerBlockMaterial.isAir()) {
+			player.sendMessage("" + ChatColor.RED + ChatColor.BOLD + "Error: " + ChatColor.RESET + ChatColor.RED +
+					                   "You cannot place your home inside a block.");
+			return true;
+		}
+
+		//Force Sign to be on Block
+		Material belowPlayerBlockMaterial = playerBlock.getRelative(BlockFace.DOWN).getType();
+		if (!belowPlayerBlockMaterial.isSolid() || Tag.TRAPDOORS.isTagged(belowPlayerBlockMaterial) || Tag.DOORS.isTagged(belowPlayerBlockMaterial)) {
+			player.sendMessage("" + ChatColor.RED + ChatColor.BOLD + "Error: " + ChatColor.RESET + ChatColor.RED +
+					                   "You must place your home above a solid block.");
 			return true;
 		}
 

@@ -1,5 +1,9 @@
-package me.liamsnow.signsethome;
+package me.liamsnow.signsethome.eventhandlers;
 
+import me.liamsnow.signsethome.Constants;
+import me.liamsnow.signsethome.SignSetHome;
+import me.liamsnow.signsethome.filehandlers.ConfigFileHandler;
+import me.liamsnow.signsethome.filehandlers.DataFileHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -11,13 +15,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.List;
-
-public class SignClickHandler implements Listener {
+public class SignClickEventHandler implements Listener {
 
 	@EventHandler
 	public void onSignClick(PlayerInteractEvent event) {
@@ -42,12 +43,12 @@ public class SignClickHandler implements Listener {
 		//Warp Spawn
 		if (signTag == Constants.TAG_SIGN_WARP_SPAWN) {
 			//Owner has no valid Warp Sign
-			if (!DataHandler.hasValidWarpSignLocation(signUUID)) {
+			if (!DataFileHandler.hasValidWarpSignLocation(signUUID)) {
 				onInvalidSign(player, "Owner has not claimed a warp home sign at spawn!");
 			}
 
 			//All Good -- Warp the Player
-			else warp(player, ConfigHandler.getSpawnLocation(), "Spawn!");
+			else warp(player, ConfigFileHandler.getSpawnLocation(), "Spawn!");
 		}
 
 		//Warp Home
@@ -58,18 +59,18 @@ public class SignClickHandler implements Listener {
 			}
 
 			//Owner has Invalid or No Home
-			else if (!DataHandler.hasValidHomeLocation(signUUID)) {
+			else if (!DataFileHandler.hasValidHomeLocation(signUUID)) {
 				onInvalidSign(player, "Owner has no valid home!");
 			}
 
 			//All Good -- Warp the Player
-			else warp(player, DataHandler.getHomeLocation(signUUID), getWarpSignMessage(player, signUUID));
+			else warp(player, DataFileHandler.getHomeLocation(signUUID), getWarpSignMessage(player, signUUID));
 		}
 
 		//Claim Warp Sign
 		if (signTag == Constants.TAG_SIGN_WARP_HOME_UNCLAIMED) {
 			//Player has no Valid Home
-			if (!DataHandler.hasValidHomeLocation(player)) {
+			if (!DataFileHandler.hasValidHomeLocation(player)) {
 				player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Error: " + ChatColor.RED +
 						                   "You must have a home first. " + ChatColor.GRAY + "" + ChatColor.ITALIC +
 						                   "You can set a home by using /sethome in your territory or territory that you're trusted in. " +
@@ -79,7 +80,7 @@ public class SignClickHandler implements Listener {
 			}
 
 			//Player has already Claimed Warp Sign
-			else if (DataHandler.hasValidWarpSignLocation(player)) {
+			else if (DataFileHandler.hasValidWarpSignLocation(player)) {
 				player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Error: " + ChatColor.RED +
 						                   "You've already claimed a warp sign." + ChatColor.GRAY + "" + ChatColor.ITALIC +
 						                   "If there is an issue please post it on the Discord under #issues"
@@ -93,7 +94,7 @@ public class SignClickHandler implements Listener {
 				signPersistentData.set(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_UUID_KEY), PersistentDataType.STRING, player.getUniqueId().toString());
 
 				//Save Warp Spawn Location
-				DataHandler.saveWarpSignLocation(player, sign.getLocation());
+				DataFileHandler.saveWarpSignLocation(player, sign.getLocation());
 
 				//Set Sign Text
 				sign.setLine(0, ChatColor.GREEN + "Warp to");
@@ -115,7 +116,7 @@ public class SignClickHandler implements Listener {
 			return "Your Home!";
 		}
 		else {
-			return DataHandler.getUsername(ownerUUID) + "'s Home!";
+			return DataFileHandler.getUsername(ownerUUID) + "'s Home!";
 		}
 	}
 

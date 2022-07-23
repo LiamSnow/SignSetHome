@@ -1,6 +1,8 @@
 package me.liamsnow.signsethome.commands;
 
 import me.liamsnow.signsethome.*;
+import me.liamsnow.signsethome.filehandlers.ConfigFileHandler;
+import me.liamsnow.signsethome.filehandlers.DataFileHandler;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.DataStore;
@@ -76,8 +78,8 @@ public class SetHomeCommand implements CommandExecutor {
 		}
 
 		//Remove Old Set Home
-		if (DataHandler.hasValidHomeLocation(player)) {
-			DataHandler.getHomeLocation(player).getBlock().setType(Constants.REPLACE_OLD_HOME_MATERIAL);
+		if (DataFileHandler.hasValidHomeLocation(player)) {
+			DataFileHandler.getHomeLocation(player).getBlock().setType(Constants.REPLACE_OLD_HOME_MATERIAL);
 			player.sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + "Removed old home.");
 		}
 
@@ -100,10 +102,10 @@ public class SetHomeCommand implements CommandExecutor {
 		sign.update();
 
 		//Save New Set Home Location
-		DataHandler.saveHomeLocation(player, playerLocation);
+		DataFileHandler.saveHomeLocation(player, playerLocation);
 
 		//Has Warp Sign
-		if (DataHandler.hasValidWarpSignLocation(player)) {
+		if (DataFileHandler.hasValidWarpSignLocation(player)) {
 			player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Set new home!" + ChatColor.RESET + "" + ChatColor.YELLOW +
 					                   " You can teleport to Spawn with the sign at your feet and teleport back here with your claimed sign at Spawn.");
 		}
@@ -111,7 +113,7 @@ public class SetHomeCommand implements CommandExecutor {
 		//Needs to Claim Warp Sign
 		else {
 			//Teleport to Warp Lobby
-			player.teleport(ConfigHandler.getWarpLobbyLocation());
+			player.teleport(ConfigFileHandler.getWarpLobbyLocation());
 
 			//Send Message
 			player.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "Set Home!", ChatColor.YELLOW + "" + ChatColor.ITALIC + "Right-Click to Claim a Warp Sign", 10, 70, 20);

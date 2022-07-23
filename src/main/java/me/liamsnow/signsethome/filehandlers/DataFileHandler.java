@@ -1,9 +1,10 @@
-package me.liamsnow.signsethome;
+package me.liamsnow.signsethome.filehandlers;
 
-import org.bukkit.ChatColor;
+import me.liamsnow.signsethome.Constants;
+import me.liamsnow.signsethome.SignSetHome;
+import me.liamsnow.signsethome.Util;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,12 +16,10 @@ import org.bukkit.persistence.PersistentDataType;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 
 import static me.liamsnow.signsethome.Constants.DATA_FILE_NAME;
 
-public class DataHandler {
+public class DataFileHandler {
 
 	private static File file;
 	private static FileConfiguration data;

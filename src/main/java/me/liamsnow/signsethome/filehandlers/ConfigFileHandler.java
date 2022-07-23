@@ -1,14 +1,10 @@
-package me.liamsnow.signsethome;
+package me.liamsnow.signsethome.filehandlers;
 
+import me.liamsnow.signsethome.SignSetHome;
+import me.liamsnow.signsethome.Util;
 import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +12,7 @@ import java.io.IOException;
 import static me.liamsnow.signsethome.Constants.CONFIG_FILE_NAME;
 import static me.liamsnow.signsethome.Constants.FORCE_OVERWRITE_CONFIG_FILE;
 
-public class ConfigHandler {
+public class ConfigFileHandler {
 
 	private static File file;
 	private static FileConfiguration config;

@@ -1,7 +1,7 @@
 package me.liamsnow.signsethome.commands;
 
-import me.liamsnow.signsethome.ConfigHandler;
-import me.liamsnow.signsethome.DataHandler;
+import me.liamsnow.signsethome.filehandlers.ConfigFileHandler;
+import me.liamsnow.signsethome.filehandlers.DataFileHandler;
 import me.liamsnow.signsethome.SignSetHome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,8 +14,8 @@ public class ReloadCommand implements CommandExecutor {
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 		SignSetHome.instance.getServer().broadcastMessage("Reloading SignSetHome Config & Data!");
 
-		ConfigHandler.load();
-		DataHandler.load();
+		ConfigFileHandler.load();
+		DataFileHandler.load();
 
 		return true;
 	}

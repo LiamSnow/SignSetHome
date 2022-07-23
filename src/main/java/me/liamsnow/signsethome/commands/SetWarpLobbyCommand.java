@@ -1,6 +1,6 @@
 package me.liamsnow.signsethome.commands;
 
-import me.liamsnow.signsethome.ConfigHandler;
+import me.liamsnow.signsethome.filehandlers.ConfigFileHandler;
 import me.liamsnow.signsethome.SignSetHome;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -15,7 +15,7 @@ public class SetWarpLobbyCommand implements CommandExecutor {
 		if (!(sender instanceof Player)) return false;
 		Player player = (Player) sender;
 
-		ConfigHandler.setWarpLobbyLocation(player.getLocation());
+		ConfigFileHandler.setWarpLobbyLocation(player.getLocation());
 		SignSetHome.instance.getServer().broadcastMessage(ChatColor.GREEN + "Set SignSetHome Warp Lobby!");
 
 		return true;

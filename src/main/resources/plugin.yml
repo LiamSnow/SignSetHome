@@ -11,7 +11,7 @@ commands:
     usage: /<command>
     default: true
   signsethome-reload:
-    description: Reloads the configuration for SignSetHome.
+    description: Reloads the config & database for SignSetHome.
     usage: /<command>
     aliases: [ssh-reload]
     default: op

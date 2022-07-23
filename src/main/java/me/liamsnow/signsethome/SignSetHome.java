@@ -1,6 +1,10 @@
 package me.liamsnow.signsethome;
 
 import me.liamsnow.signsethome.commands.*;
+import me.liamsnow.signsethome.eventhandlers.SignBreakEventHandler;
+import me.liamsnow.signsethome.eventhandlers.SignClickEventHandler;
+import me.liamsnow.signsethome.filehandlers.ConfigFileHandler;
+import me.liamsnow.signsethome.filehandlers.DataFileHandler;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,8 +18,8 @@ public final class SignSetHome extends JavaPlugin {
 		instance = this;
 
 		//Load Config & Data
-		ConfigHandler.init();
-		DataHandler.init();
+		ConfigFileHandler.init();
+		DataFileHandler.init();
 
 		//Load GriefPrevention Plugin
 		Plugin griefPreventionPlugin = getServer().getPluginManager().getPlugin("GriefPrevention");
@@ -34,7 +38,9 @@ public final class SignSetHome extends JavaPlugin {
 		getCommand("signsethome-givewarplobbysign").setExecutor(new GiveWarpLobbySignCommand());
 
 		//Register Event Handlers
-		getServer().getPluginManager().registerEvents(new SignClickHandler(), this);
+		getServer().getPluginManager().registerEvents(new SignClickEventHandler(), this);
+		getServer().getPluginManager().registerEvents(new SignBreakEventHandler(), this);
+		//TODO remove /sethome on claim abandonment
 
 		//Log
 		getLogger().info("Enabled SignSetHome!");
@@ -42,7 +48,7 @@ public final class SignSetHome extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		ConfigHandler.save();
-		DataHandler.save();
+		ConfigFileHandler.save();
+		DataFileHandler.save();
 	}
 }

@@ -12,11 +12,6 @@ public class Util {
 		return SignSetHome.instance.getServer().getWorlds().get(0);
 	}
 
-	public static boolean isSignAtLocation(Location location) {
-		if (location == null) return false;
-		return location.getBlock().getState() instanceof Sign;
-	}
-
 	/* Credit to K3ttle (spigotmc.org) */
 	public static final BlockFace[] axis = { BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST };
 	public static final BlockFace[] radial = { BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.EAST, BlockFace.SOUTH_EAST, BlockFace.SOUTH, BlockFace.SOUTH_WEST, BlockFace.WEST, BlockFace.NORTH_WEST };

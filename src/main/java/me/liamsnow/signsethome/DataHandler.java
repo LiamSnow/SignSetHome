@@ -2,16 +2,21 @@ package me.liamsnow.signsethome;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static me.liamsnow.signsethome.Constants.DATA_FILE_NAME;
 
@@ -64,16 +69,38 @@ public class DataHandler {
 		data.set(key + ".z", location.getZ());
 		data.set(key + ".yaw", location.getYaw());
 	}
+	public static boolean isValidSavedLocation(Location location, String wantedUUID, int wantedTag) {
+		if (location == null || wantedUUID == null) return false;
+
+		BlockState blockState = location.getBlock().getState();
+		if (!(blockState instanceof Sign)) return false;
+
+		Sign sign = (Sign) blockState;
+		PersistentDataContainer signPersistentData = sign.getPersistentDataContainer();
+		int signTag = signPersistentData.getOrDefault(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_TAG_KEY), PersistentDataType.INTEGER, -1);
+		String signUUID = signPersistentData.getOrDefault(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_UUID_KEY), PersistentDataType.STRING, null);
+
+		return signTag == wantedTag && signUUID != null && signUUID.equals(wantedUUID);
+	}
+	public static boolean isValidSavedLocation(Location location, Player wantedPlayer, int wantedTag) {
+		return isValidSavedLocation(location, wantedPlayer.getUniqueId().toString(), wantedTag);
+	}
+
 	public static Location getHomeLocation(String UUID) {
 		return readLocation(UUID + ".home");
 	}
 	public static Location getHomeLocation(Player player) {
 		return getHomeLocation(player.getUniqueId().toString());
 	}
-
 	public static void saveHomeLocation(Player player, Location location) {
 		saveLocation(player.getUniqueId().toString() + ".home", location);
 		save();
+	}
+	public static boolean hasValidHomeLocation(Player targetPlayer) {
+		return isValidSavedLocation(getHomeLocation(targetPlayer), targetPlayer, Constants.TAG_SIGN_WARP_SPAWN);
+	}
+	public static boolean hasValidHomeLocation(String targetUUID) {
+		return isValidSavedLocation(getHomeLocation(targetUUID), targetUUID, Constants.TAG_SIGN_WARP_SPAWN);
 	}
 
 	public static Location getWarpSignLocation(String UUID) {
@@ -82,10 +109,15 @@ public class DataHandler {
 	public static Location getWarpSignLocation(Player player) {
 		return getWarpSignLocation(player.getUniqueId().toString());
 	}
-
 	public static void saveWarpSignLocation(Player player, Location location) {
 		saveLocation(player.getUniqueId().toString() + ".warp-sign", location);
 		save();
+	}
+	public static boolean hasValidWarpSignLocation(Player targetPlayer) {
+		return isValidSavedLocation(getWarpSignLocation(targetPlayer), targetPlayer, Constants.TAG_SIGN_WARP_HOME_CLAIMED);
+	}
+	public static boolean hasValidWarpSignLocation(String targetUUID) {
+		return isValidSavedLocation(getWarpSignLocation(targetUUID), targetUUID, Constants.TAG_SIGN_WARP_HOME_CLAIMED);
 	}
 
 }

@@ -76,10 +76,9 @@ public class SetHomeCommand implements CommandExecutor {
 		}
 
 		//Remove Old Set Home
-		Location oldSetHome = DataHandler.getHomeLocation(player);
-		if (Util.isSignAtLocation(oldSetHome)) {
-			oldSetHome.getBlock().setType(Constants.REPLACE_OLD_HOME_MATERIAL);
-			player.sendMessage(ChatColor.GRAY + "Removed old home.");
+		if (DataHandler.hasValidHomeLocation(player)) {
+			DataHandler.getHomeLocation(player).getBlock().setType(Constants.REPLACE_OLD_HOME_MATERIAL);
+			player.sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + "Removed old home.");
 		}
 
 		//Place Sign at Feet
@@ -104,7 +103,7 @@ public class SetHomeCommand implements CommandExecutor {
 		DataHandler.saveHomeLocation(player, playerLocation);
 
 		//Has Warp Sign
-		if (Util.isSignAtLocation(DataHandler.getWarpSignLocation(player))) {
+		if (DataHandler.hasValidWarpSignLocation(player)) {
 			player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Set new home!" + ChatColor.RESET + "" + ChatColor.YELLOW +
 					                   " You can teleport to Spawn with the sign at your feet and teleport back here with your claimed sign at Spawn.");
 		}

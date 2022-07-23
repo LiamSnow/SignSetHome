@@ -35,81 +35,78 @@ public class SignClickHandler implements Listener {
 
 		//Check if Warp
 		PersistentDataContainer signPersistentData = sign.getPersistentDataContainer();
-		int signPersistentDataValue = signPersistentData.get(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_TAG_KEY), PersistentDataType.INTEGER);
+		int signTag = signPersistentData.getOrDefault(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_TAG_KEY), PersistentDataType.INTEGER, -1);
+		String signUUID = signPersistentData.getOrDefault(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_UUID_KEY), PersistentDataType.STRING, null);
 
 		//Warp Spawn
-		if (signPersistentDataValue == Constants.TAG_SIGN_WARP_SPAWN) {
-			player.teleport(ConfigHandler.getSpawnLocation());
-			return;
+		if (signTag == Constants.TAG_SIGN_WARP_SPAWN) {
+			//Owner has no valid Warp Sign
+			if (!DataHandler.hasValidWarpSignLocation(signUUID)) {
+				onInvalidSign(player, "Owner has not claimed a warp home sign at spawn!");
+			}
+
+			//All Good -- Warp the Player
+			else player.teleport(ConfigHandler.getSpawnLocation());
 		}
 
 		//Warp Home
-		if (signPersistentDataValue == Constants.TAG_SIGN_WARP_HOME_CLAIMED) {
-			String UUID = signPersistentData.get(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_UUID_KEY), PersistentDataType.STRING);
-
-			if (UUID == null) {
-				player.sendMessage(ChatColor.RED + "Invalid Warp Sign -- No Player UUID Saved");
-				SignSetHome.instance.getLogger().severe("Error: Invalid Warp Sign -- No Player UUID Saved");
-				return;
+		if (signTag == Constants.TAG_SIGN_WARP_HOME_CLAIMED) {
+			//Sign has no Saved Owner UUID
+			if (signUUID == null) {
+				onInvalidSign(player, "Owner does not exist!");
 			}
 
-			Location homeLocation = DataHandler.getHomeLocation(UUID);
-
-			if (homeLocation == null) {
-				player.sendMessage(ChatColor.RED + "Invalid Warp Sign -- No Player Home Saved");
-				SignSetHome.instance.getLogger().severe("Error: Invalid Warp Sign -- No Player Home Saved");
-				return;
+			//Owner has Invalid or No Home
+			else if (!DataHandler.hasValidHomeLocation(signUUID)) {
+				onInvalidSign(player, "Owner has no valid home!");
 			}
 
-			player.teleport(homeLocation);
-			return;
+			//All Good -- Warp the Player
+			else player.teleport(DataHandler.getHomeLocation(signUUID));
 		}
 
 		//Claim Warp Sign
-		if (signPersistentDataValue == Constants.TAG_SIGN_WARP_HOME_UNCLAIMED) {
-			if (!Util.isSignAtLocation(DataHandler.getHomeLocation(player))) {
+		if (signTag == Constants.TAG_SIGN_WARP_HOME_UNCLAIMED) {
+			//Player has no Valid Home
+			if (!DataHandler.hasValidHomeLocation(player)) {
 				player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Error: " + ChatColor.RED +
 						                   "You must have a home first. " + ChatColor.GRAY + "" + ChatColor.ITALIC +
 						                   "You can set a home by using /sethome in your territory or territory that you're trusted in. " +
 						                   "You can claim territory by right clicking a piece of paper on the ground. " +
 						                   "You can become trusted in a territory by having the owner run /trust " + player.getDisplayName() + "."
 				);
-				return;
 			}
 
-			if (Util.isSignAtLocation(DataHandler.getWarpSignLocation(player))) {
+			//Player has already Claimed Warp Sign
+			else if (DataHandler.hasValidWarpSignLocation(player)) {
 				player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Error: " + ChatColor.RED +
 						                   "You've already claimed a warp sign." + ChatColor.GRAY + "" + ChatColor.ITALIC +
 						                   "If there is an issue please post it on the Discord under #issues"
 				);
-				return;
 			}
 
-			//Tag Claimed Sign & Add UUID
-			signPersistentData.set(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_TAG_KEY), PersistentDataType.INTEGER, Constants.TAG_SIGN_WARP_HOME_CLAIMED);
-			signPersistentData.set(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_UUID_KEY), PersistentDataType.STRING, player.getUniqueId().toString());
+			//All Good -- Let the player claim it
+			else {
+				//Tag Claimed Sign & Add UUID
+				signPersistentData.set(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_TAG_KEY), PersistentDataType.INTEGER, Constants.TAG_SIGN_WARP_HOME_CLAIMED);
+				signPersistentData.set(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_UUID_KEY), PersistentDataType.STRING, player.getUniqueId().toString());
 
-			//Save Warp Spawn Location
-			DataHandler.saveWarpSignLocation(player, sign.getLocation());
+				//Save Warp Spawn Location
+				DataHandler.saveWarpSignLocation(player, sign.getLocation());
 
-			//Set Sign Text
-			sign.setLine(0, ChatColor.GREEN + "Warp to");
-			sign.setLine(1, ChatColor.GOLD + "" + ChatColor.BOLD + player.getDisplayName() + "'s");
-			sign.setLine(2, ChatColor.GOLD + "" + ChatColor.BOLD + "Home");
-			sign.setLine(3, "");
-			sign.update();
-
-			return;
+				//Set Sign Text
+				sign.setLine(0, ChatColor.GREEN + "Warp to");
+				sign.setLine(1, ChatColor.GOLD + "" + ChatColor.BOLD + player.getDisplayName() + "'s");
+				sign.setLine(2, ChatColor.GOLD + "" + ChatColor.BOLD + "Home");
+				sign.setLine(3, "");
+				sign.update();
+			}
 		}
 	}
 
-	private boolean getFirstMetadataValueAsBoolean(List<MetadataValue> values) {
-		int size = values.size();
-		if (size == 0) return false;
-		else {
-			if (size > 1) SignSetHome.instance.getLogger().warning("SignSetHome Error - Multiple Metadatas on Sign");
-			return values.get(0).asBoolean();
-		}
+	private void onInvalidSign(Player player, String reason) {
+		player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Invalid Sign: " + ChatColor.RESET + "" + ChatColor.RED + reason);
+		SignSetHome.instance.getLogger().warning("Error: Invalid SignSetHome Sign: " + reason);
 	}
 
 }

@@ -4,11 +4,8 @@ import org.bukkit.Material;
 
 public class Constants {
 
-//	public static long LOOP_DELAY = 40l; //2 seconds
-//	public static long LOOP_PERIOD = 20l;// * 60l * 5l; //5 minutes
-
 	public static String CONFIG_FILE_NAME = "config.yml";
-	public static boolean FORCE_OVERWRITE_CONFIG_FILE = true; //DISABLE FOR PRODUCTION
+	public static boolean FORCE_OVERWRITE_CONFIG_FILE = false; //DISABLE FOR PRODUCTION
 
 	public static String DATA_FILE_NAME = "data.yml";
 

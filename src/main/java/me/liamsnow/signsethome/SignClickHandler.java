@@ -46,7 +46,7 @@ public class SignClickHandler implements Listener {
 			}
 
 			//All Good -- Warp the Player
-			else player.teleport(ConfigHandler.getSpawnLocation());
+			else warp(player, ConfigHandler.getSpawnLocation(), "Spawn!");
 		}
 
 		//Warp Home
@@ -62,7 +62,7 @@ public class SignClickHandler implements Listener {
 			}
 
 			//All Good -- Warp the Player
-			else player.teleport(DataHandler.getHomeLocation(signUUID));
+			else warp(player, DataHandler.getHomeLocation(signUUID), getWarpSignMessage(player, signUUID));
 		}
 
 		//Claim Warp Sign
@@ -107,6 +107,21 @@ public class SignClickHandler implements Listener {
 	private void onInvalidSign(Player player, String reason) {
 		player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Invalid Sign: " + ChatColor.RESET + "" + ChatColor.RED + reason);
 		SignSetHome.instance.getLogger().warning("Error: Invalid SignSetHome Sign: " + reason);
+	}
+
+	private String getWarpSignMessage(Player usingPlayer, String ownerUUID) {
+		if (ownerUUID.equals(usingPlayer.getUniqueId().toString())) {
+			return "Your Home!";
+		}
+		else {
+			SignSetHome.instance.getLogger().severe("'" + ownerUUID + "' != '" + usingPlayer.getUniqueId() + "'");
+			return DataHandler.getUsername(ownerUUID) + "'s Home!";
+		}
+	}
+
+	private void warp(Player player, Location location, String desc) {
+		player.teleport(location);
+		player.sendMessage(ChatColor.GREEN + "Warped to " + ChatColor.GOLD + "" + ChatColor.BOLD + desc);
 	}
 
 }

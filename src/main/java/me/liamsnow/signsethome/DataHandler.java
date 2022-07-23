@@ -93,7 +93,9 @@ public class DataHandler {
 		return getHomeLocation(player.getUniqueId().toString());
 	}
 	public static void saveHomeLocation(Player player, Location location) {
-		saveLocation(player.getUniqueId().toString() + ".home", location);
+		String playerUUID = player.getUniqueId().toString();
+		saveLocation(playerUUID + ".home", location);
+		data.set(playerUUID + ".username", player.getDisplayName());
 		save();
 	}
 	public static boolean hasValidHomeLocation(Player targetPlayer) {
@@ -110,7 +112,9 @@ public class DataHandler {
 		return getWarpSignLocation(player.getUniqueId().toString());
 	}
 	public static void saveWarpSignLocation(Player player, Location location) {
-		saveLocation(player.getUniqueId().toString() + ".warp-sign", location);
+		String playerUUID = player.getUniqueId().toString();
+		saveLocation(playerUUID + ".warp-sign", location);
+		data.set(playerUUID + ".username", player.getDisplayName());
 		save();
 	}
 	public static boolean hasValidWarpSignLocation(Player targetPlayer) {
@@ -120,4 +124,7 @@ public class DataHandler {
 		return isValidSavedLocation(getWarpSignLocation(targetUUID), targetUUID, Constants.TAG_SIGN_WARP_HOME_CLAIMED);
 	}
 
+	public static String getUsername(String playerUUID) {
+		return data.getString(playerUUID + ".username");
+	}
 }

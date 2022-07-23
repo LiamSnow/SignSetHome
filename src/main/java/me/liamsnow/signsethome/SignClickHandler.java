@@ -3,6 +3,7 @@ package me.liamsnow.signsethome;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -120,6 +121,9 @@ public class SignClickHandler implements Listener {
 
 	private void warp(Player player, Location location, String desc) {
 		player.teleport(location);
+		Location particleLocation = player.getLocation();
+		particleLocation = particleLocation.add(0, 1.5, 0); //FIXME remove = ?
+		player.spawnParticle(Particle.CLOUD, particleLocation, 50, 0.5, 0.1, 0.5, 0.001);
 		player.sendMessage(ChatColor.GREEN + "Warped to " + ChatColor.GOLD + "" + ChatColor.BOLD + desc);
 	}
 

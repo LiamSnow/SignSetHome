@@ -35,15 +35,23 @@ public class SignBreakEventHandler implements Listener {
 		//Check if Warp
 		PersistentDataContainer signPersistentData = sign.getPersistentDataContainer();
 		int signTag = signPersistentData.getOrDefault(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_TAG_KEY), PersistentDataType.INTEGER, -1);
+		String signUUID = signPersistentData.getOrDefault(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_UUID_KEY), PersistentDataType.STRING, null);
 
 		if (signTag == Constants.TAG_SIGN_WARP_SPAWN) {
-			event.setDropItems(false);
-//		    event.setCancelled(true);
+			//Breaking their own Set Home
+			if (signUUID.equals(player.getUniqueId().toString())) {
+				event.setDropItems(false);
+				DataFileHandler.saveHomeLocation(player, new Location(player.getWorld(), Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, 0f, 0f));
+				player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Set Home Removed. " + ChatColor.RESET + "" + ChatColor.GRAY + "" + ChatColor.ITALIC +
+						                   "Add it back by using /sethome in your territory or territory you are trusted in.");
+			}
 
-			DataFileHandler.saveHomeLocation(player, new Location(player.getWorld(), Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, 0f, 0f));
-
-			player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Set Home Removed. " + ChatColor.RESET + "" + ChatColor.GRAY + "" + ChatColor.ITALIC +
-					"Add it back by using /sethome in your territory or territory you are trusted in.");
+			//Breaking other Set Home
+			else {
+				event.setCancelled(true);
+				player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Error: " + ChatColor.RESET + "" + ChatColor.RED +
+						                   "You cannot remove someone else's Set Home.");
+			}
 		}
 	}
 

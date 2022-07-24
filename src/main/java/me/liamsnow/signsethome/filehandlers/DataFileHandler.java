@@ -99,11 +99,12 @@ public class DataFileHandler {
 	public static void saveHomeLocation(Player player, Location location, long griefPreventionClaimID) {
 		UUID playerUUID = player.getUniqueId();
 		saveLocation(playerUUID + ".home", location);
-		data.set(playerUUID + ".griefPreventionClaimID", griefPreventionClaimID);
+		saveGriefPreventionClaimID(playerUUID, griefPreventionClaimID);
 		save();
 	}
 	public static void removeHomeLocation(UUID playerUUID) {
 		saveLocation(playerUUID + ".home", new Location(Util.getOverworld(), Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, 0f, 0f));
+		saveGriefPreventionClaimID(playerUUID, -1);
 		save();
 	}
 	public static void removeHomeLocation(Player player) {
@@ -134,6 +135,13 @@ public class DataFileHandler {
 		return isValidSavedLocation(getWarpSignLocation(playerUUID), playerUUID, Constants.TAG_SIGN_WARP_HOME_CLAIMED);
 	}
 
+	public static long getGriefPreventionClaimID(UUID playerUUID) {
+		return data.getLong(playerUUID + ".griefPreventionClaimID");
+	}
+	public static void saveGriefPreventionClaimID(UUID playerUUID, long griefPreventionClaimID) {
+		data.set(playerUUID + ".griefPreventionClaimID", griefPreventionClaimID);
+	}
+
 	public static List<UUID> getAllPlayersWithHomesInClaim(long griefPreventionClaimID) {
 		Set<String> allPlayerUUIDsStrings = data.getKeys(false);
 		List<UUID> inClaimPlayerUUIDs = new ArrayList<UUID>();
@@ -142,7 +150,7 @@ public class DataFileHandler {
 		for (String playerUUIDString : allPlayerUUIDsStrings) {
 			UUID playerUUID = UUID.fromString(playerUUIDString);
 			//Check if player's home is in the claim they are asking about
-			if (data.getLong(playerUUIDString + ".griefPreventionClaimID") == griefPreventionClaimID) {
+			if (getGriefPreventionClaimID(playerUUID) == griefPreventionClaimID) {
 				inClaimPlayerUUIDs.add(playerUUID);
 			}
 		}

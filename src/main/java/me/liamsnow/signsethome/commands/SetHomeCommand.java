@@ -41,7 +41,7 @@ public class SetHomeCommand implements CommandExecutor {
 		boolean inWilderness = true;
 		DataStore gpDataStore = SignSetHome.griefPrevention.dataStore;
 		PlayerData gpPlayerData = gpDataStore.getPlayerData(player.getUniqueId());
-		Claim gpClaim = gpDataStore.getClaimAt(playerLocation, false, gpPlayerData.lastClaim);
+		Claim gpClaim = (gpPlayerData == null) ? null : gpDataStore.getClaimAt(playerLocation, false, gpPlayerData.lastClaim);
 
 		if (gpClaim != null) {
 			inWilderness = false;

@@ -1,15 +1,22 @@
 package me.liamsnow.signsethome;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 
+import java.util.UUID;
+
 public class Util {
 
 	public static World getOverworld() {
 		return SignSetHome.instance.getServer().getWorlds().get(0);
+	}
+
+	public static String getPlayerUsernameFromUUID(UUID playerUUID) {
+		return Bukkit.getOfflinePlayer(playerUUID).getName();
 	}
 
 	/* Credit to K3ttle (spigotmc.org) */

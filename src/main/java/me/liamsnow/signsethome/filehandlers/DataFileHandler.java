@@ -3,8 +3,10 @@ package me.liamsnow.signsethome.filehandlers;
 import me.liamsnow.signsethome.Constants;
 import me.liamsnow.signsethome.SignSetHome;
 import me.liamsnow.signsethome.Util;
+import me.ryanhamshire.GriefPrevention.Claim;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Server;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,7 +17,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.*;
 
 import static me.liamsnow.signsethome.Constants.DATA_FILE_NAME;
 
@@ -68,62 +70,83 @@ public class DataFileHandler {
 		data.set(key + ".z", location.getZ());
 		data.set(key + ".yaw", location.getYaw());
 	}
-	public static boolean isValidSavedLocation(Location location, String wantedUUID, int wantedTag) {
-		if (location == null || wantedUUID == null) return false;
+	public static boolean isValidSavedLocation(Location location, UUID wantedPlayer, int wantedTag) {
+		if (location == null || wantedPlayer == null) return false;
 
 		BlockState blockState = location.getBlock().getState();
 		if (!(blockState instanceof Sign)) return false;
 
 		Sign sign = (Sign) blockState;
 		PersistentDataContainer signPersistentData = sign.getPersistentDataContainer();
-		int signTag = signPersistentData.getOrDefault(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_TAG_KEY), PersistentDataType.INTEGER, -1);
-		String signUUID = signPersistentData.getOrDefault(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_UUID_KEY), PersistentDataType.STRING, null);
 
-		return signTag == wantedTag && signUUID != null && signUUID.equals(wantedUUID);
+		int signTag = signPersistentData.getOrDefault(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_TAG_KEY), PersistentDataType.INTEGER, -1);
+		if (signTag != wantedTag) return false;
+
+		String signOwnerUUIDString = signPersistentData.getOrDefault(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_UUID_KEY), PersistentDataType.STRING, null);
+
+		return signOwnerUUIDString != null && wantedPlayer.compareTo(UUID.fromString(signOwnerUUIDString)) == 0;
 	}
 	public static boolean isValidSavedLocation(Location location, Player wantedPlayer, int wantedTag) {
-		return isValidSavedLocation(location, wantedPlayer.getUniqueId().toString(), wantedTag);
+		return isValidSavedLocation(location, wantedPlayer.getUniqueId(), wantedTag);
 	}
 
-	public static Location getHomeLocation(String UUID) {
-		return readLocation(UUID + ".home");
+	public static Location getHomeLocation(UUID playerUUID) {
+		return readLocation(playerUUID + ".home");
 	}
 	public static Location getHomeLocation(Player player) {
-		return getHomeLocation(player.getUniqueId().toString());
+		return getHomeLocation(player.getUniqueId());
 	}
-	public static void saveHomeLocation(Player player, Location location) {
-		String playerUUID = player.getUniqueId().toString();
+	public static void saveHomeLocation(Player player, Location location, long griefPreventionClaimID) {
+		UUID playerUUID = player.getUniqueId();
 		saveLocation(playerUUID + ".home", location);
-		data.set(playerUUID + ".username", player.getDisplayName());
+		data.set(playerUUID + ".griefPreventionClaimID", griefPreventionClaimID);
 		save();
 	}
-	public static boolean hasValidHomeLocation(Player targetPlayer) {
-		return isValidSavedLocation(getHomeLocation(targetPlayer), targetPlayer, Constants.TAG_SIGN_WARP_SPAWN);
+	public static void removeHomeLocation(UUID playerUUID) {
+		saveLocation(playerUUID + ".home", new Location(Util.getOverworld(), Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, 0f, 0f));
+		save();
 	}
-	public static boolean hasValidHomeLocation(String targetUUID) {
-		return isValidSavedLocation(getHomeLocation(targetUUID), targetUUID, Constants.TAG_SIGN_WARP_SPAWN);
+	public static void removeHomeLocation(Player player) {
+		removeHomeLocation(player.getUniqueId());
+	}
+	public static boolean hasValidHomeLocation(Player player) {
+		return isValidSavedLocation(getHomeLocation(player), player, Constants.TAG_SIGN_WARP_SPAWN);
+	}
+	public static boolean hasValidHomeLocation(UUID playerUUID) {
+		return isValidSavedLocation(getHomeLocation(playerUUID), playerUUID, Constants.TAG_SIGN_WARP_SPAWN);
 	}
 
-	public static Location getWarpSignLocation(String UUID) {
-		return readLocation(UUID + ".warp-sign");
+	public static Location getWarpSignLocation(UUID playerUUID) {
+		return readLocation(playerUUID + ".warp-sign");
 	}
 	public static Location getWarpSignLocation(Player player) {
-		return getWarpSignLocation(player.getUniqueId().toString());
+		return getWarpSignLocation(player.getUniqueId());
 	}
 	public static void saveWarpSignLocation(Player player, Location location) {
 		String playerUUID = player.getUniqueId().toString();
 		saveLocation(playerUUID + ".warp-sign", location);
-		data.set(playerUUID + ".username", player.getDisplayName());
 		save();
 	}
-	public static boolean hasValidWarpSignLocation(Player targetPlayer) {
-		return isValidSavedLocation(getWarpSignLocation(targetPlayer), targetPlayer, Constants.TAG_SIGN_WARP_HOME_CLAIMED);
+	public static boolean hasValidWarpSignLocation(Player player) {
+		return isValidSavedLocation(getWarpSignLocation(player), player, Constants.TAG_SIGN_WARP_HOME_CLAIMED);
 	}
-	public static boolean hasValidWarpSignLocation(String targetUUID) {
-		return isValidSavedLocation(getWarpSignLocation(targetUUID), targetUUID, Constants.TAG_SIGN_WARP_HOME_CLAIMED);
+	public static boolean hasValidWarpSignLocation(UUID playerUUID) {
+		return isValidSavedLocation(getWarpSignLocation(playerUUID), playerUUID, Constants.TAG_SIGN_WARP_HOME_CLAIMED);
 	}
 
-	public static String getUsername(String playerUUID) {
-		return data.getString(playerUUID + ".username");
+	public static List<UUID> getAllPlayersWithHomesInClaim(long griefPreventionClaimID) {
+		Set<String> allPlayerUUIDsStrings = data.getKeys(false);
+		List<UUID> inClaimPlayerUUIDs = new ArrayList<UUID>();
+
+		//Loop Through Every Player
+		for (String playerUUIDString : allPlayerUUIDsStrings) {
+			UUID playerUUID = UUID.fromString(playerUUIDString);
+			//Check if player's home is in the claim they are asking about
+			if (data.getLong(playerUUIDString + ".griefPreventionClaimID") == griefPreventionClaimID) {
+				inClaimPlayerUUIDs.add(playerUUID);
+			}
+		}
+
+		return inClaimPlayerUUIDs;
 	}
 }

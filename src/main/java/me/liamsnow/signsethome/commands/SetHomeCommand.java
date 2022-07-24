@@ -95,14 +95,14 @@ public class SetHomeCommand implements CommandExecutor {
 		signPersistentData.set(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_UUID_KEY), PersistentDataType.STRING, player.getUniqueId().toString());
 
 		//Set Sign Text
-		sign.setLine(0, ChatColor.GREEN + "Warp to");
-		sign.setLine(1, ChatColor.GOLD + "" + ChatColor.BOLD + "Spawn");
-		sign.setLine(2, "");
-		sign.setLine(3, "");
+		sign.setLine(0, ChatColor.AQUA + player.getDisplayName() + "'s");
+		sign.setLine(1, ChatColor.AQUA + "Home");
+		sign.setLine(2, ChatColor.GREEN + "Warp to");
+		sign.setLine(3, ChatColor.GOLD + "" + ChatColor.BOLD + "Spawn");
 		sign.update();
 
 		//Save New Set Home Location
-		DataFileHandler.saveHomeLocation(player, playerLocation);
+		DataFileHandler.saveHomeLocation(player, playerLocation, gpClaim.getID());
 
 		//Has Warp Sign
 		if (DataFileHandler.hasValidWarpSignLocation(player)) {

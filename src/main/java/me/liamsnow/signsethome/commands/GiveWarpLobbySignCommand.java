@@ -46,7 +46,7 @@ public class GiveWarpLobbySignCommand implements CommandExecutor {
 		signPersistentData.set(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_TAG_KEY), PersistentDataType.INTEGER, Constants.TAG_SIGN_WARP_HOME_UNCLAIMED);
 
 		//Edit Sign Text
-		signBlockState.setLine(0, ChatColor.BLUE + "Right Click");
+		signBlockState.setLine(0, ChatColor.RED + "Right Click");
 		signBlockState.setLine(1, ChatColor.GRAY + "to Claim this");
 		signBlockState.setLine(2, ChatColor.GRAY + "Set Home Sign");
 		signBlockState.update();

@@ -34,7 +34,6 @@ It comes at a slight cost of the inconvience of having to walk back to the sign,
 ## Dependencies
 
 `GriefProtection` Required for restricting where players can make their `/sethomes`.
-I recommend editing GriefPrevention/messages.yml:Messages.CreateClaimSuccess.Text to inform the player to use /sethome
 
 ## Player Commands
 

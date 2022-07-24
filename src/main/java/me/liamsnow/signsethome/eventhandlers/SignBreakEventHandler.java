@@ -41,7 +41,7 @@ public class SignBreakEventHandler implements Listener {
 			//Breaking their own Set Home
 			if (signUUID.equals(player.getUniqueId().toString())) {
 				event.setDropItems(false);
-				DataFileHandler.saveHomeLocation(player, new Location(player.getWorld(), Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, 0f, 0f));
+				DataFileHandler.removeHomeLocation(player);
 				player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Set Home Removed. " + ChatColor.RESET + "" + ChatColor.GRAY + "" + ChatColor.ITALIC +
 						                   "Add it back by using /sethome in your territory or territory you are trusted in.");
 			}

@@ -1,13 +1,17 @@
 package me.liamsnow.signsethome;
 
 import me.liamsnow.signsethome.commands.*;
+import me.liamsnow.signsethome.eventhandlers.GriefProtectionEventHandler;
 import me.liamsnow.signsethome.eventhandlers.SignBreakEventHandler;
 import me.liamsnow.signsethome.eventhandlers.SignClickEventHandler;
 import me.liamsnow.signsethome.filehandlers.ConfigFileHandler;
 import me.liamsnow.signsethome.filehandlers.DataFileHandler;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
+import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Set;
 
 public final class SignSetHome extends JavaPlugin {
 	public static SignSetHome instance;
@@ -40,6 +44,7 @@ public final class SignSetHome extends JavaPlugin {
 		//Register Event Handlers
 		getServer().getPluginManager().registerEvents(new SignClickEventHandler(), this);
 		getServer().getPluginManager().registerEvents(new SignBreakEventHandler(), this);
+		getServer().getPluginManager().registerEvents(new GriefProtectionEventHandler(), this);
 		//TODO remove /sethome on claim abandonment
 
 		//Log

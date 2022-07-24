@@ -2,6 +2,7 @@ package me.liamsnow.signsethome.eventhandlers;
 
 import me.liamsnow.signsethome.Constants;
 import me.liamsnow.signsethome.SignSetHome;
+import me.liamsnow.signsethome.Util;
 import me.liamsnow.signsethome.filehandlers.ConfigFileHandler;
 import me.liamsnow.signsethome.filehandlers.DataFileHandler;
 import org.bukkit.ChatColor;
@@ -17,6 +18,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.UUID;
 
 public class SignClickEventHandler implements Listener {
 
@@ -38,12 +41,13 @@ public class SignClickEventHandler implements Listener {
 		//Check if Warp
 		PersistentDataContainer signPersistentData = sign.getPersistentDataContainer();
 		int signTag = signPersistentData.getOrDefault(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_TAG_KEY), PersistentDataType.INTEGER, -1);
-		String signUUID = signPersistentData.getOrDefault(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_UUID_KEY), PersistentDataType.STRING, null);
+		String signOwnerUUIDString = signPersistentData.getOrDefault(new NamespacedKey(SignSetHome.instance, Constants.PERSISTENT_DATA_UUID_KEY), PersistentDataType.STRING, null);
+		UUID signOwnerUUID = signOwnerUUIDString == null ? null : UUID.fromString(signOwnerUUIDString);
 
 		//Warp Spawn
 		if (signTag == Constants.TAG_SIGN_WARP_SPAWN) {
 			//Owner has no valid Warp Sign
-			if (!DataFileHandler.hasValidWarpSignLocation(signUUID)) {
+			if (!DataFileHandler.hasValidWarpSignLocation(signOwnerUUID)) {
 				onInvalidSign(player, "Owner has not claimed a warp home sign at spawn!");
 			}
 
@@ -54,17 +58,17 @@ public class SignClickEventHandler implements Listener {
 		//Warp Home
 		if (signTag == Constants.TAG_SIGN_WARP_HOME_CLAIMED) {
 			//Sign has no Saved Owner UUID
-			if (signUUID == null) {
+			if (signOwnerUUID == null) {
 				onInvalidSign(player, "Owner does not exist!");
 			}
 
 			//Owner has Invalid or No Home
-			else if (!DataFileHandler.hasValidHomeLocation(signUUID)) {
+			else if (!DataFileHandler.hasValidHomeLocation(signOwnerUUID)) {
 				onInvalidSign(player, "Owner has no valid home!");
 			}
 
 			//All Good -- Warp the Player
-			else warp(player, DataFileHandler.getHomeLocation(signUUID), getWarpSignMessage(player, signUUID));
+			else warp(player, DataFileHandler.getHomeLocation(signOwnerUUID), getWarpSignMessage(player, signOwnerUUID));
 		}
 
 		//Claim Warp Sign
@@ -111,12 +115,12 @@ public class SignClickEventHandler implements Listener {
 		SignSetHome.instance.getLogger().warning("Error: Invalid SignSetHome Sign: " + reason);
 	}
 
-	private String getWarpSignMessage(Player usingPlayer, String ownerUUID) {
+	private String getWarpSignMessage(Player usingPlayer, UUID ownerUUID) {
 		if (ownerUUID.equals(usingPlayer.getUniqueId().toString())) {
 			return "Your Home!";
 		}
 		else {
-			return DataFileHandler.getUsername(ownerUUID) + "'s Home!";
+			return Util.getPlayerUsernameFromUUID(ownerUUID) + "'s Home!";
 		}
 	}
 

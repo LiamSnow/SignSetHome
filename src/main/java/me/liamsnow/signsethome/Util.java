@@ -1,11 +1,10 @@
 package me.liamsnow.signsethome;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -17,6 +16,14 @@ public class Util {
 
 	public static String getPlayerUsernameFromUUID(UUID playerUUID) {
 		return Bukkit.getOfflinePlayer(playerUUID).getName();
+	}
+
+	public static void warp(Player player, Location location, String desc) {
+		player.teleport(location);
+		Location particleLocation = player.getLocation();
+		particleLocation = particleLocation.add(0, 1.5, 0);
+		player.spawnParticle(Particle.CLOUD, particleLocation, 50, 0.5, 0.1, 0.5, 0.001);
+		player.sendMessage(ChatColor.GREEN + "Warped to " + ChatColor.GOLD + "" + ChatColor.BOLD + desc);
 	}
 
 	/* Credit to K3ttle (spigotmc.org) */

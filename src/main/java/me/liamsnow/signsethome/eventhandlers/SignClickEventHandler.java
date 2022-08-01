@@ -52,7 +52,7 @@ public class SignClickEventHandler implements Listener {
 			}
 
 			//All Good -- Warp the Player
-			else warp(player, ConfigFileHandler.getSpawnLocation(), "Spawn!");
+			else Util.warp(player, ConfigFileHandler.getSpawnLocation(), "Spawn!");
 		}
 
 		//Warp Home
@@ -68,7 +68,7 @@ public class SignClickEventHandler implements Listener {
 			}
 
 			//All Good -- Warp the Player
-			else warp(player, DataFileHandler.getHomeLocation(signOwnerUUID), getWarpSignMessage(player, signOwnerUUID));
+			else Util.warp(player, DataFileHandler.getHomeLocation(signOwnerUUID), getWarpSignMessage(player, signOwnerUUID));
 		}
 
 		//Claim Warp Sign
@@ -123,13 +123,4 @@ public class SignClickEventHandler implements Listener {
 			return Util.getPlayerUsernameFromUUID(ownerUUID) + "'s Home!";
 		}
 	}
-
-	private void warp(Player player, Location location, String desc) {
-		player.teleport(location);
-		Location particleLocation = player.getLocation();
-		particleLocation = particleLocation.add(0, 1.5, 0); //FIXME remove = ?
-		player.spawnParticle(Particle.CLOUD, particleLocation, 50, 0.5, 0.1, 0.5, 0.001);
-		player.sendMessage(ChatColor.GREEN + "Warped to " + ChatColor.GOLD + "" + ChatColor.BOLD + desc);
-	}
-
 }

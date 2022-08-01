@@ -1,5 +1,6 @@
 package me.liamsnow.signsethome;
 
+import com.sk89q.worldguard.WorldGuard;
 import me.liamsnow.signsethome.commands.*;
 import me.liamsnow.signsethome.eventhandlers.GriefProtectionEventHandler;
 import me.liamsnow.signsethome.eventhandlers.SignBreakEventHandler;
@@ -36,6 +37,7 @@ public final class SignSetHome extends JavaPlugin {
 
 		//Register Commands
 		getCommand("sethome").setExecutor(new SetHomeCommand());
+		getCommand("stuck").setExecutor(new StuckCommand());
 		getCommand("signsethome-reload").setExecutor(new ReloadCommand());
 		getCommand("signsethome-setspawn").setExecutor(new SetSpawnCommand());
 		getCommand("signsethome-setwarplobby").setExecutor(new SetWarpLobbyCommand());

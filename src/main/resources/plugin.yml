@@ -4,11 +4,17 @@ main: me.liamsnow.signsethome.SignSetHome
 api-version: 1.19
 authors: [ LiamSnow ]
 website: https://liamsnow.com
-depend: ['GriefPrevention']
+depend: [GriefPrevention]
+softdepend: [WorldGuard]
 commands:
   sethome:
     description: Sets your home location that can be teleported to from Spawn.
     usage: /<command>
+    default: true
+  stuck:
+    description: Teleports you out of a hole if you are trapped in someone else's territory or Spawn.
+    usage: /<command>
+    aliased: [unstuck]
     default: true
   signsethome-reload:
     description: Reloads the config & database for SignSetHome.

@@ -16,7 +16,7 @@ public class SetWarpLobbyCommand implements CommandExecutor {
 		Player player = (Player) sender;
 
 		ConfigFileHandler.setWarpLobbyLocation(player.getLocation());
-		SignSetHome.instance.getServer().broadcastMessage(ChatColor.GREEN + "Set SignSetHome Warp Lobby!");
+		player.sendMessage(ChatColor.GREEN + "Set SignSetHome Warp Lobby!");
 
 		return true;
 	}

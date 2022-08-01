@@ -12,7 +12,7 @@ public class ReloadCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-		SignSetHome.instance.getServer().broadcastMessage("Reloading SignSetHome Config & Data!");
+		sender.sendMessage("Reloading SignSetHome Config & Data!");
 
 		ConfigFileHandler.load();
 		DataFileHandler.load();

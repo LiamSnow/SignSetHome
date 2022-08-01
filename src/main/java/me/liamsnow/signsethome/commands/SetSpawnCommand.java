@@ -16,7 +16,7 @@ public class SetSpawnCommand implements CommandExecutor {
 		Player player = (Player) sender;
 
 		ConfigFileHandler.setSpawnLocation(player.getLocation());
-		SignSetHome.instance.getServer().broadcastMessage(ChatColor.GREEN + "Set SignSetHome Spawn!");
+		player.sendMessage(ChatColor.GREEN + "Set SignSetHome Spawn!");
 
 		return true;
 	}

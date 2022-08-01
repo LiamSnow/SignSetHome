@@ -60,7 +60,7 @@ public class GiveWarpLobbySignCommand implements CommandExecutor {
 		player.getInventory().addItem(signItem);
 
 		//Send message to Player
-		SignSetHome.instance.getServer().broadcastMessage(ChatColor.GREEN + "Given Warp Lobby Sign. " + ChatColor.GRAY + "" + ChatColor.ITALIC +
+		player.sendMessage(ChatColor.GREEN + "Given Warp Lobby Sign. " + ChatColor.GRAY + "" + ChatColor.ITALIC +
 				                                                  "Place as many of these signs in the Warp Lobby for players to use!");
 
 		return true;

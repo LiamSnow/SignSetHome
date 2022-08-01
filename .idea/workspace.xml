@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0924de86-ea8e-4450-ac16-d3f7da25e033" name="Changes" comment="" />
+    <list default="true" id="0924de86-ea8e-4450-ac16-d3f7da25e033" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/commands/GiveWarpLobbySignCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/commands/GiveWarpLobbySignCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/commands/ReloadCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/commands/ReloadCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/commands/SetSpawnCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/commands/SetSpawnCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/commands/SetWarpLobbyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/commands/SetWarpLobbyCommand.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,18 +51,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/liams/Documents/GitHub/SignSetHome&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/liams/Documents/GitHub/TipMessages",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="SignSetHome build" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>

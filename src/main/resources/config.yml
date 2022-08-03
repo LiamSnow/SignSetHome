@@ -16,5 +16,8 @@ warp-lobby-location:
   yaw: 45
   pitch: 0
 
+# Cooldown for warping to a home (seconds)
+warp-home-cooldown: 300
+
 # DO NOT EDIT
 config-version: 1

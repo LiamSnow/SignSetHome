@@ -19,6 +19,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import javax.xml.crypto.Data;
 import java.util.UUID;
 
 public class SignClickEventHandler implements Listener {
@@ -67,8 +68,18 @@ public class SignClickEventHandler implements Listener {
 				onInvalidSign(player, "Owner has no valid home!");
 			}
 
+			//Still in cool down
+			else if (Util.getTimestampSeconds() - DataFileHandler.getLastWarpHomeTimestamp(player.getUniqueId()) <
+				ConfigFileHandler.getWarpHomeCooldown()) {
+				player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Error: " + ChatColor.RESET + "" + ChatColor.RED +
+						                   "You need to wait " + (ConfigFileHandler.getWarpHomeCooldown() / 60) + " minutes between each warp home!");
+			}
+
 			//All Good -- Warp the Player
-			else Util.warp(player, DataFileHandler.getHomeLocation(signOwnerUUID), getWarpSignMessage(player, signOwnerUUID));
+			else {
+				DataFileHandler.saveLastWarpHomeTimestamp(player.getUniqueId());
+				Util.warp(player, DataFileHandler.getHomeLocation(signOwnerUUID), getWarpSignMessage(player, signOwnerUUID));
+			}
 		}
 
 		//Claim Warp Sign

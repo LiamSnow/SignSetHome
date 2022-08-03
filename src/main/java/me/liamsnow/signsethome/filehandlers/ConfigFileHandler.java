@@ -79,5 +79,8 @@ public class ConfigFileHandler {
 		saveLocation("warp-lobby-location", location);
 	}
 
+	public static long getWarpHomeCooldown() {
+		return config.getLong("warp-home-cooldown");
+	}
 
 }

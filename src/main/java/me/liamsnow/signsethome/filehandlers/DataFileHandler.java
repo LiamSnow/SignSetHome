@@ -136,7 +136,7 @@ public class DataFileHandler {
 	}
 
 	public static long getGriefPreventionClaimID(UUID playerUUID) {
-		return data.getLong(playerUUID + ".griefPreventionClaimID");
+		return data.getLong(playerUUID + ".griefPreventionClaimID", -1);
 	}
 	public static void saveGriefPreventionClaimID(UUID playerUUID, long griefPreventionClaimID) {
 		data.set(playerUUID + ".griefPreventionClaimID", griefPreventionClaimID);
@@ -156,5 +156,13 @@ public class DataFileHandler {
 		}
 
 		return inClaimPlayerUUIDs;
+	}
+
+	public static long getLastWarpHomeTimestamp(UUID playerUUID) {
+		return data.getLong(playerUUID + ".lastWarpHomeTimestamp", -1);
+	}
+
+	public static void saveLastWarpHomeTimestamp(UUID playerUUID) {
+		data.set(playerUUID + ".lastWarpHomeTimestamp", Util.getTimestampSeconds());
 	}
 }

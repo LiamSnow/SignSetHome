@@ -18,6 +18,10 @@ public class Util {
 		return Bukkit.getOfflinePlayer(playerUUID).getName();
 	}
 
+	public static long getTimestampSeconds() {
+		return System.currentTimeMillis() / 1000;
+	}
+
 	public static void warp(Player player, Location location, String desc) {
 		player.teleport(location);
 		Location particleLocation = player.getLocation();

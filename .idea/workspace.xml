@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0924de86-ea8e-4450-ac16-d3f7da25e033" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/Util.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/eventhandlers/SignClickEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/eventhandlers/SignClickEventHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/filehandlers/ConfigFileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/filehandlers/ConfigFileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/filehandlers/DataFileHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/liamsnow/signsethome/filehandlers/DataFileHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
-    </list>
+    <list default="true" id="0924de86-ea8e-4450-ac16-d3f7da25e033" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
